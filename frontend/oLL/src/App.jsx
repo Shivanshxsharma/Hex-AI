@@ -12,6 +12,8 @@ import Login from './pages/login'
 import Signup from './pages/Signup'
 import { useEffect } from 'react'
 import { useUser, useAuth } from '@clerk/clerk-react'
+const api_url =import.meta.env.VITE_API_URL
+
 const router =createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -54,7 +56,7 @@ useEffect(() => {
   try {
 
 const token = await getToken();
-await fetch("http://localhost:5000/api/user", {
+await fetch(`${api_url}/api/user`, {
   method: "POST",
   headers: {
     
