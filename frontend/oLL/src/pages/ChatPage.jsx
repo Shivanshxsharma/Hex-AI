@@ -293,7 +293,7 @@ useEffect(() => {
     const handleChunk = (chunk) => {
         setCurrentResponse(prev => prev + chunk);
         setisloading(false);
-
+        console.log(currentResponse);
     };
 
     const handleChunkEnd = async() => {
