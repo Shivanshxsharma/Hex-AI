@@ -289,11 +289,10 @@ useEffect(() => {
     if (!startGenerating || !socketRef.current) return;
     
     console.log("getting response");
-    
+        console.log(currentResponse);
     const handleChunk = (chunk) => {
         setCurrentResponse(prev => prev + chunk);
         setisloading(false);
-        console.log(currentResponse);
     };
 
     const handleChunkEnd = async() => {
