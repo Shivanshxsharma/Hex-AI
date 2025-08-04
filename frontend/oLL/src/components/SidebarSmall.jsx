@@ -5,6 +5,9 @@ import close from "../assets/cross.png";
 import userimg from "../assets/user.png"
 import { Link } from "react-router";
 import { useNavigate } from 'react-router';
+
+const api_url=import.meta.env.VITE_API_URL
+
 const SidebarSmall = ({currentChatId,historyExtractor,mobileMenuHandler,setsignoutPopup,personality}) => {
   const {user,isLoaded}=useUser()
   const [showDeleteIndex, setShowDeleteIndex] = useState(null);
@@ -55,7 +58,7 @@ async function deletechat(chatid) {
   try {
     console.log("Deleting Chat...");
 
-    const res = await fetch(`http://localhost:5000/api/history/delete?user=${user.id}&chatid=${chatid}&personality=${personality}`, {
+    const res = await fetch(`${api_url}/api/history/delete?user=${user.id}&chatid=${chatid}&personality=${personality}`, {
       method: "DELETE",
     });
 

@@ -21,6 +21,8 @@ import { useUser } from "@clerk/clerk-react";
 import { useAuth } from "@clerk/clerk-react";
 import SignConfirmation from "../components/signConfirmation";
 import Suggestions from "../components/Suggestions";
+const api_url =import.meta.env.VITE_API_URL
+
 
 
 
@@ -110,7 +112,7 @@ useEffect(() => {
 
 async function chatExtractor(token) {
   try {
-    const res = await fetch(`http://localhost:5000/api/history/chats?chatid=${chatId}`, {
+    const res = await fetch(`${api_url}/api/history/chats?chatid=${chatId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -197,7 +199,7 @@ async function historyExtractor(token,id) {
 
   console.log("running history extraction")
   try {
-    const res = await fetch(`http://localhost:5000/api/history?user=${id}&personality=${Headline}`, {
+    const res = await fetch(`${api_url}/api/history?user=${id}&personality=${Headline}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -243,7 +245,7 @@ async function historyHandler(finalResponse, token,chatId) {
   
   try {
 
-    const res = await fetch(`http://localhost:5000/api/history` ,{
+    const res = await fetch(`${api_url}/api/history` ,{
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

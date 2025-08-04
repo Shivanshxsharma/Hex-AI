@@ -8,6 +8,7 @@ import SplitText from "./animations/textAnimate"
 import PersonalityCard from './PersonalityCard';
 import { Link } from "react-router";
 import { useNavigate } from 'react-router';
+const api_url=import.meta.env.VITE_API_URL
 
 function Sidebar({currentChatId,changeWidth,setchangeWidth,personality,setotherDivWidthChange,setsignoutPopup,historyExtractor}) {
   const navigate=useNavigate();
@@ -26,7 +27,7 @@ async function deletechat(chatid) {
   try {
     console.log("Deleting Chat...");
 
-    const res = await fetch(`http://localhost:5000/api/history/delete?user=${user.id}&chatid=${chatid}&personality=${personality}`, {
+    const res = await fetch(`${api_url}/api/history/delete?user=${user.id}&chatid=${chatid}&personality=${personality}`, {
       method: "DELETE",
     });
 
