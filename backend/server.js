@@ -20,10 +20,12 @@ console.log(process.env.CLERK_SECRET_KEY);
 
 const {clerkMiddleware} =require("@clerk/express");
 const historyrouter = require("./routes/historyrouter");
-app.use(cors({
-  origin: "http://localhost:5173", // allow your frontend origin
-  credentials: true // optional: if using cookies or auth headers
-}));
+app.use(
+  cors({
+    origin: "https://owl-ai-frontend.onrender.com",
+    credentials: true,
+  })
+);
 
 //socket connection
 
