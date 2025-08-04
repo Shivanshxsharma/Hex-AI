@@ -16,7 +16,7 @@ import Loader, { BarsLoader, RingLoader, SpiralLoader, WaveLoader, ZigzagLoader 
 import SidebarSmall from "../components/SidebarSmall";
 import opt from '../assets/menulogo.png'
 import SignupBoard from "../components/SignupBoard";
-import SignConfirmation from "../components/signConfirmation";
+import SignConfirmation from "../components/SignConfirmation";
 import TextType from "../components/animations/TextType";
 
 function Home() {

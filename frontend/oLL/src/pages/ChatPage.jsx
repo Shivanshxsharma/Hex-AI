@@ -19,7 +19,7 @@ import { io } from "socket.io-client";
 import { Await, useNavigate, redirect, useParams } from "react-router";
 import { useUser } from "@clerk/clerk-react";
 import { useAuth } from "@clerk/clerk-react";
-import SignConfirmation from "../components/signConfirmation";
+import SignConfirmation from "../components/SignConfirmation";
 import Suggestions from "../components/Suggestions";
 const api_url =import.meta.env.VITE_API_URL
 
