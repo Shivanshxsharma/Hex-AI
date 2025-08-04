@@ -1,0 +1,104 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+textarea::-webkit-scrollbar,#ChatFace::-webkit-scrollbar {
+  width: 10px;
+}
+#history::-webkit-scrollbar {
+  width: 2px;
+}
+
+button:hover{
+  cursor: pointer;
+}
+*::-webkit-scrollbar{
+  background-color: #101010;
+}
+*::-webkit-scrollbar-thumb{
+  background-color: #2e2e2e;
+  border-radius: 10px;
+  width: 2px;
+}
+#history::-webkit-scrollbar-thumb {
+  background-color: rgba(90, 90, 90, 0.6); /* soft dark gray */
+  border-radius: 1px;
+  
+}
+/* index.css or App.css */
+@font-face {
+  font-family: 'Delius';
+  src: url('./assets/Delius/FacultyGlyphic-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.delius {
+  font-family: 'Delius', sans-serif;
+}
+#sug-box::-webkit-scrollbar {
+  width: 3px;
+  height: 2px;
+}
+#sug-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+#sug-box::-webkit-scrollbar-thumb {
+  background-color: rgba(90, 90, 90, 0.6); /* soft dark gray */
+  border-radius: 1px;
+  
+}
+
+textarea::-webkit-scrollbar-track,#ChatFace::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb,#ChatFace::-webkit-scrollbar-thumb {
+  background-color: rgba(90, 90, 90, 0.6); /* soft dark gray */
+  border-radius: 6px;
+  
+}
+html.dark {
+  color-scheme: dark;
+  background-color: #0f0f0f;
+}
+/* 1. All text white by default */
+* {
+  color: white;
+  font-family: 'Delius', sans-serif;
+}
+.force-sans {
+  font-family: sans-serif !important;
+  font-size: 90%;
+}
+.sans-only {
+  font-family: sans-serif !important;
+  font-size: 90%;
+}
+
+
+
+/* 2. Override for log-page and all its children */
+#log-page,
+#log-page * {
+  color: black !important;
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  background-color: #0F0F0F;
+}
+
+#pcard{
+      backdrop-filter: blur(25px) contrast(1.1);
+    -webkit-backdrop-filter: blur(25px) contrast(1.1);
+    background: 
+        linear-gradient(135deg, 
+            rgba(138, 43, 226, 0.2) 0%,    /* violet */
+            rgba(255, 255, 0, 0.2) 100%),   /* yellow */
+        rgba(0, 0, 0, 0.1);                 /* dark overlay */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
