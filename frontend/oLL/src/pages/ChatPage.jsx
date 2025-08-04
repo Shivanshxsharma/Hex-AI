@@ -152,7 +152,9 @@ async function chatExtractor(token) {
 
 
 useEffect(() => {
-  const socket = io("http://localhost:5000");
+  const socket = io(`${api_url}`,{
+    transports: ["websocket"],
+  });
   socketRef.current = socket;
 
   socket.on("connect", () => {
