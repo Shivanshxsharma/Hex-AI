@@ -3,11 +3,11 @@ const { genresponse } = require("../controllers/generateResponse");
 
 function socketConnection(server) {
   const io = new Server(server, {
-    cors: {
-      origin: "http://localhost:5173",
-      methods: ["GET", "POST"],
-      credentials: true,
-    },
+cors: {
+  origin: "https://owl-ai-frontend.onrender.com", 
+  methods: ["GET", "POST"],
+  credentials: true,
+},
   });
 
   io.on("connection",  (socket) => {
