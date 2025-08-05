@@ -6,7 +6,7 @@
   "scripts": {
     "tailwind:init": "tailwindcss init",
     "dev": "vite",
-      "build": "vite build && echo '/* /index.html 200' > dist/_redirects",
+      "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
