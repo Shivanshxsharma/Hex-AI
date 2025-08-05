@@ -55,6 +55,7 @@ const config = {
    
     for await(const chunk of response){
     const text =  chunk.text;
+    console.log(text);
     const sources=addCitations(chunk);
     if (text) {
      const citationsMarkdown = sources
