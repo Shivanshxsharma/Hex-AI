@@ -18,7 +18,7 @@ const router =createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path='/' element={<Home />} />
-      <Route path='/login' element={<SignIn/>} />
+      <Route path='/login' element={<Login/>} />
       <Route path='/signup' element={<Signup/>} />
       <Route path='/normal/new' element={<ChatPage Headline="Normal" />} />
       <Route path='/astro/new' element={<ChatPage Headline="Astro"/>} />

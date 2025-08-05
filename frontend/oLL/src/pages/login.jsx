@@ -6,7 +6,7 @@ function Login() {
     <div className="flex justify-center items-center min-h-screen !bg-neutral-950">
       <SignIn
 
-      signUpUrl='/signup'
+        signUpUrl='/signup'
         appearance={{
           baseTheme:dark,
           elements: {
