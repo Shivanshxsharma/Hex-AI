@@ -11,15 +11,15 @@ import ChatPage from './pages/ChatPage'
 import Login from './pages/Sign-in'
 import Signup from './pages/Signup'
 import { useEffect } from 'react'
-import { useUser, useAuth, SignIn } from '@clerk/clerk-react'
+import { useUser, useAuth, SignIn, SignUp } from '@clerk/clerk-react'
 const api_url =import.meta.env.VITE_API_URL
 
 const router =createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path='/' element={<Home />} />
-      <Route path='/login' element={<Login/>} />
-      <Route path='/signup' element={<Signup/>} />
+      <Route path='/login' element={<SignIn/>} />
+      <Route path='/signup' element={<SignUp/>} />
       <Route path='/normal/new' element={<ChatPage Headline="Normal" />} />
       <Route path='/astro/new' element={<ChatPage Headline="Astro"/>} />
       <Route path='/code/new' element={<ChatPage Headline="Code"/>} />
