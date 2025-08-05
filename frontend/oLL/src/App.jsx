@@ -8,8 +8,7 @@ import ChatBubble from './components/ChatBubble'
 import PersonalityCard from './components/PersonalityCard'
 import Home from './pages/Home'
 import ChatPage from './pages/ChatPage'
-import Login from './pages/Sign-in'
-import Signup from './pages/Signup'
+
 import { useEffect } from 'react'
 import { useUser, useAuth, SignIn, SignUp } from '@clerk/clerk-react'
 const api_url =import.meta.env.VITE_API_URL
