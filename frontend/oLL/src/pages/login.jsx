@@ -5,8 +5,8 @@ function Login() {
   return (
     <div className="flex justify-center items-center min-h-screen !bg-neutral-950">
       <SignIn
-
-        signUpUrl='/signup'
+        signup
+        signUpUrl='https://owl-ai-frontend.onrender.com/signup'
         appearance={{
           baseTheme:dark,
           elements: {
