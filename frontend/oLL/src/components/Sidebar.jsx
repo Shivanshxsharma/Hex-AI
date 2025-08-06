@@ -151,7 +151,7 @@ useEffect(() => {
                       to={`/${personality.toLowerCase()}/chats/${e.chatid}`}>{e.title}</Link>
                       <button 
                       onClick={()=>{deletechat(e.chatid)}}
-                      className=' h-[80%]  z-1 hover:z-2 hover:bg-[white] rounded-xl p-2 flex justify-center items-center   group-hover:opacity-100 opacity-0  absolute right-3'><img src={del} alt="" /></button></div>
+                      className=' h-[80%]  z-1 hover:z-2 hover:bg-[white] rounded-xl p-2 flex justify-center items-center   group-hover:opacity-100 opacity-0  absolute right-3'><img src={del} alt="Delete chat" className="w-4 h-4" /></button></div>
                     ))
                  }
                 </div>
