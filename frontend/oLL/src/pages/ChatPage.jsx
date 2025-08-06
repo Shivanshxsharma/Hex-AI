@@ -286,58 +286,44 @@ async function historyHandler(finalResponse, token,chatId) {
 
 
 useEffect(() => {
+  if (!socketRef.current) return;
 
-    if (!socketRef.current) {
-    console.warn("Socket not initialized yet.");
-    return;
-  }
-    
-        console.log("getting response");
-        console.log(currentResponse);
-    const handleChunk = (chunk) => {
-        setCurrentResponse(prev => prev + chunk);
-        setisloading(false);
-    };
+  const socket = socketRef.current;
 
-    const handleChunkEnd = async() => {
-      const token= await getToken()  
-        setCurrentResponse(latestResponse => {
-            if (latestResponse.trim()) { 
-                setConversation(  prev => {
-                    const lastMessage = prev[prev.length - 1];
-                    if (lastMessage?.role === 'model' && lastMessage?.parts?.[0]?.text === latestResponse) {
-                        return prev;
-                    }
-                    setisAdded(true);
-                   historyHandler({role: "model", parts:[{text: latestResponse}]}, token,chatIdRef.current);
-                    return [...prev, {role: "model", parts:[{text: latestResponse}]}];
-                });
-            }
+  const handleChunk = (chunk) => {
+    setCurrentResponse(prev => prev + chunk);
+    setisloading(false);
+  };
 
-
-            return ""; 
+  const handleChunkEnd = async () => {
+    const token = await getToken();
+    setCurrentResponse(latestResponse => {
+      if (latestResponse.trim()) {
+        setConversation(prev => {
+          const lastMessage = prev[prev.length - 1];
+          if (lastMessage?.role === 'model' && lastMessage?.parts?.[0]?.text === latestResponse) {
+            return prev;
+          }
+          setisAdded(true);
+          historyHandler({ role: "model", parts: [{ text: latestResponse }] }, token, chatIdRef.current);
+          return [...prev, { role: "model", parts: [{ text: latestResponse }] }];
         });
+      }
+      setstartGenerating(false);
+      return "";
+    });
+  };
 
-                
-                
-    };
+  // ✅ Attach once on mount
+  socket.on("model_chunk", handleChunk);
+  socket.on("model_chunk_end", handleChunkEnd);
 
-    // 🔥 CRITICAL: Remove existing listeners first
-    socketRef.current.off("model_chunk", handleChunk);
-    socketRef.current.off("model_chunk_end", handleChunkEnd);
-    
-    // Then add new listeners
-    socketRef.current.on("model_chunk", handleChunk);
-    socketRef.current.on("model_chunk_end", handleChunkEnd);
-
-    return () => {
-        if (socketRef.current) {
-            socketRef.current.off("model_chunk", handleChunk);
-            socketRef.current.off("model_chunk_end", handleChunkEnd);
-        }
-    };
+  return () => {
+    socket.off("model_chunk", handleChunk);
+    socket.off("model_chunk_end", handleChunkEnd);
+  };
 }, []);
-  
+
 
 
 
