@@ -333,7 +333,7 @@ useEffect(() => {
             socketRef.current.off("model_chunk_end", handleChunkEnd);
         }
     };
-}, [startGenerating]);
+}, []);
   
 
 
