@@ -26,7 +26,7 @@ function Sidebar({currentChatId,changeWidth,setchangeWidth,personality,setotherD
 async function deletechat(chatid) {
   try {
     console.log("Deleting Chat...");
-
+   setHistory(prev => prev.filter(chat => chat.chatId === chatid));
     const res = await fetch(`${api_url}/api/history/delete?user=${user.id}&chatid=${chatid}&personality=${personality}`, {
       method: "DELETE",
     });
