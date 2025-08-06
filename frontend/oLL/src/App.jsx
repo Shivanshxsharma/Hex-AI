@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
-import {createBrowserRouter, createRoutesFromElements, Link,NavLink, Route, RouterProvider, Routes} from 'react-router-dom'
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom'
 import ChatInput from './components/ChatInput'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
@@ -9,16 +9,18 @@ import PersonalityCard from './components/PersonalityCard'
 import Home from './pages/Home'
 import ChatPage from './pages/ChatPage'
 
-import { useEffect } from 'react'
 import { useUser, useAuth, SignIn, SignUp } from '@clerk/clerk-react'
-const api_url =import.meta.env.VITE_API_URL
+const api_url = import.meta.env.VITE_API_URL
 
-const router =createBrowserRouter(
+// Move router outside component - THIS IS IMPORTANT!
+const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path='/' element={<Home />} />
-      <Route path='/login' element={<SignIn/>} />
-      <Route path='/signup' element={<SignUp/>} />
+      {/* ADD routing="path" and path props - THIS FIXES THE ISSUE! */}
+      <Route path='/login' element={<SignIn routing="path" path="/login" />} />
+      <Route path='/signup' element={<SignUp routing="path" path="/signup" />} />
+      
       <Route path='/normal/new' element={<ChatPage Headline="Normal" />} />
       <Route path='/astro/new' element={<ChatPage Headline="Astro"/>} />
       <Route path='/code/new' element={<ChatPage Headline="Code"/>} />
@@ -27,9 +29,6 @@ const router =createBrowserRouter(
       <Route path='/movie/new' element={<ChatPage Headline="Movie"/>} />
       <Route path='/study/new' element={<ChatPage Headline="Study"/>} />
       <Route path='/career/new' element={<ChatPage Headline="Career"/>} />
-
-
-
 
       <Route path='/normal/chats/:chatId' element={<ChatPage Headline="Normal" />} />
       <Route path='/astro/chats/:chatId' element={<ChatPage Headline="Astro"/>} />
@@ -41,52 +40,63 @@ const router =createBrowserRouter(
       <Route path='/career/chats/:chatId' element={<ChatPage Headline="Career"/>} />
     </>
   )
-
-
 )
 
 function App() {
-const {user,isSignedIn}=useUser();
-const { getToken } = useAuth();
+  // ADD isLoaded - THIS IS CRUCIAL!
+  const {user, isSignedIn, isLoaded} = useUser();
+  const { getToken } = useAuth();
+  
+  // Replace localStorage with React state
+  const [userSynced, setUserSynced] = useState(false);
+  const [syncInProgress, setSyncInProgress] = useState(false);
 
-useEffect(() => {
-  if (!isSignedIn || !user || localStorage.getItem("userSynced")) return;
-  const SignInHandler=async ()=>{
-  try {
-
-const token = await getToken();
-await fetch(`${api_url}/api/user`, {
-  method: "POST",
-  headers: {
+  useEffect(() => {
+    // ADD isLoaded check - WAIT FOR CLERK TO INITIALIZE!
+    if (!isLoaded || !isSignedIn || !user || userSynced || syncInProgress) return;
     
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json"
-  }})
-    console.log("user Added");
-    localStorage.setItem("userSynced", "true");
-  } catch (error) {
-     console.error("❌ Error syncing user:", error);
+    const SignInHandler = async () => {
+      setSyncInProgress(true);
+      try {
+        const token = await getToken();
+        const response = await fetch(`${api_url}/api/user`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        console.log("✅ User synced successfully");
+        setUserSynced(true);
+      } catch (error) {
+        console.error("❌ Error syncing user:", error);
+      } finally {
+        setSyncInProgress(false);
+      }
+    }
+
+    SignInHandler();
+  }, [user?.id, isSignedIn, isLoaded, getToken, userSynced, syncInProgress])
+
+  // ADD loading state - SHOW LOADING WHILE CLERK INITIALIZES!
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div>Loading...</div>
+      </div>
+    );
   }
-  }
-
-
-SignInHandler();
-}, [user,isSignedIn])
-
-
-
-
-
-
-
-
 
   return (
     <>
-    <RouterProvider router={router}/>
+      <RouterProvider router={router}/>
     </>
   );
 }
 
 export default App;
-
