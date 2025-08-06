@@ -292,7 +292,7 @@ useEffect(() => {
     return;
   }
     
-    console.log("getting response");
+        console.log("getting response");
         console.log(currentResponse);
     const handleChunk = (chunk) => {
         setCurrentResponse(prev => prev + chunk);
@@ -315,7 +315,6 @@ useEffect(() => {
             }
 
 
-            setstartGenerating(false);
             return ""; 
         });
 
