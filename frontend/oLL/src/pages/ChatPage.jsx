@@ -286,7 +286,11 @@ async function historyHandler(finalResponse, token,chatId) {
 
 
 useEffect(() => {
-    if (!startGenerating || !socketRef.current) return;
+
+    if (!socketRef.current) {
+    console.warn("Socket not initialized yet.");
+    return;
+  }
     
     console.log("getting response");
         console.log(currentResponse);
