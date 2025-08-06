@@ -9,7 +9,10 @@ import PersonalityCard from './components/PersonalityCard'
 import Home from './pages/Home'
 import ChatPage from './pages/ChatPage'
 
-import { useUser, useAuth, SignIn, SignUp } from '@clerk/clerk-react'
+import { useUser, useAuth, } from '@clerk/clerk-react'
+import Login from './pages/Login'
+import SignConfirmation from './components/SignConfirmation'
+import Signup from './pages/Signup'
 const api_url = import.meta.env.VITE_API_URL
 
 // Move router outside component - THIS IS IMPORTANT!
@@ -18,9 +21,9 @@ const router = createBrowserRouter(
     <>
       <Route path='/' element={<Home />} />
       {/* ADD routing="path" and path props - THIS FIXES THE ISSUE! */}
-      <Route path='/login' element={<SignIn routing="path" path="/login" />} />
-      <Route path='/signup' element={<SignUp routing="path" path="/signup" />} />
-      
+      <Route path='/login' element={<Login routing="path" path="/login" />} />
+      <Route path='/signup' element={<Signup routing="path" path="/signup" />} />
+      nu
       <Route path='/normal/new' element={<ChatPage Headline="Normal" />} />
       <Route path='/astro/new' element={<ChatPage Headline="Astro"/>} />
       <Route path='/code/new' element={<ChatPage Headline="Code"/>} />
