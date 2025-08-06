@@ -9,7 +9,7 @@ import PersonalityCard from './PersonalityCard';
 import { Link } from "react-router";
 import { useNavigate } from 'react-router';
 const api_url=import.meta.env.VITE_API_URL
-
+import del from '../assets/delete-3-svgrepo-com.svg'
 function Sidebar({currentChatId,changeWidth,setchangeWidth,personality,setotherDivWidthChange,setsignoutPopup,historyExtractor}) {
   const navigate=useNavigate();
       const [visibility, setvisibility] = useState(0);
@@ -151,7 +151,7 @@ useEffect(() => {
                       to={`/${personality.toLowerCase()}/chats/${e.chatid}`}>{e.title}</Link>
                       <button 
                       onClick={()=>{deletechat(e.chatid)}}
-                      className=' h-[80%]  z-1 hover:z-2 hover:bg-[black] rounded-xl p-2 flex justify-center items-center   group-hover:opacity-100 opacity-0  absolute right-3'>delete</button></div>
+                      className=' h-[80%]  z-1 hover:z-2 hover:bg-[white] rounded-xl p-2 flex justify-center items-center   group-hover:opacity-100 opacity-0  absolute right-3'><img src={del} alt="" /></button></div>
                     ))
                  }
                 </div>

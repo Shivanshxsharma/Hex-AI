@@ -23,9 +23,8 @@ const router = createBrowserRouter(
       {/* ADD routing="path" and path props - THIS FIXES THE ISSUE! */}
       <Route path='/login' element={<Login routing="path" path="/login" />} />
       <Route path='/signup' element={<Signup routing="path" path="/signup" />} />
-      nu
-      <Route path='/normal/new' element={<ChatPage Headline="Normal" />} />
-      <Route path='/astro/new' element={<ChatPage Headline="Astro"/>} />
+      <Route path='/normal/new' element={<ChatPage routing="path" path="/normal/new" Headline="Normal" />} />
+      <Route path='/astro/new' element={<ChatPage routing="path" path="/astro/new" Headline="Astro"/>} />
       <Route path='/code/new' element={<ChatPage Headline="Code"/>} />
       <Route path='/therapist/new' element={<ChatPage Headline="Therapist"/>} />
       <Route path='/friend/new' element={<ChatPage Headline="Friend"/>} />
