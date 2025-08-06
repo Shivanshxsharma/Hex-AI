@@ -4,7 +4,6 @@ import Loader from './Loader';
 import ThinkingLoader from './ThinkingLoader';
 
 const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloading }) => {
-  console.log(conversation);
   const chatEndRef = useRef(null);
 
   useEffect(() => {
