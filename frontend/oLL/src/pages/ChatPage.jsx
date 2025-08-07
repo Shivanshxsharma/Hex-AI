@@ -155,6 +155,7 @@ useEffect(() => {
   const socket = io(`${api_url}`,{
     transports: ["websocket"],
   });
+  setstartGenerating(true);
   socketRef.current = socket;
 
   socket.on("connect", () => {
@@ -287,7 +288,7 @@ async function historyHandler(finalResponse, token,chatId) {
 
 
 useEffect(() => {
-    if(!socketRef.current) return;
+    if(!startGenerating||!socketRef.current) return;
     
     console.log("getting response");
         console.log(currentResponse);
@@ -334,7 +335,7 @@ useEffect(() => {
             socketRef.current.off("model_chunk_end", handleChunkEnd);
         }
     };
-}, []);
+}, [startGenerating]);
   
 
 
