@@ -181,15 +181,15 @@ const [startGenerating, setstartGenerating] = useState(false);
 
 async function submitHandler(text) {
     if(text && socketRef.current) {
-        setstartGenerating(true);
-        socketRef.current.emit("prompt_By_User", text, Headline,currentChatId);
-        const token= await getToken();
-        console.log("submitting");
-        setConversation(prev=>[...prev, {role: "user", parts:[{text: text}]}])
-        await historyHandler({role: "user", parts:[{text: text}]}, token,currentChatId);
-        setisloading(true);
-        setVisible(false)
-        setCurrentResponse("");
+      socketRef.current.emit("prompt_By_User", text, Headline,currentChatId);
+      const token= await getToken();
+      console.log("submitting");
+      setConversation(prev=>[...prev, {role: "user", parts:[{text: text}]}])
+      await historyHandler({role: "user", parts:[{text: text}]}, token,currentChatId);
+      setisloading(true);
+      setVisible(false)
+      setCurrentResponse("");
+      setstartGenerating(true);
     }
 }
 
@@ -286,7 +286,7 @@ async function historyHandler(finalResponse, token,chatId) {
 
 
 useEffect(() => {
-    if ( !socketRef.current) return;
+    if (!startGenerating || !socketRef.current) return;
     
     console.log("getting response");
         console.log(currentResponse);
@@ -311,6 +311,7 @@ useEffect(() => {
             }
 
 
+            setstartGenerating(false);
             return ""; 
         });
 
@@ -332,7 +333,7 @@ useEffect(() => {
             socketRef.current.off("model_chunk_end", handleChunkEnd);
         }
     };
-}, []);
+}, [startGenerating]);
   
 
 
