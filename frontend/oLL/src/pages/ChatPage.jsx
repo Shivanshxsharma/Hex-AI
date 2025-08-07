@@ -181,6 +181,7 @@ const [startGenerating, setstartGenerating] = useState(false);
 
 async function submitHandler(text) {
     if(text && socketRef.current) {
+        setstartGenerating(true);
         socketRef.current.emit("prompt_By_User", text, Headline,currentChatId);
         const token= await getToken();
         console.log("submitting");
@@ -189,7 +190,6 @@ async function submitHandler(text) {
         setisloading(true);
         setVisible(false)
         setCurrentResponse("");
-        setstartGenerating(true);
     }
 }
 
