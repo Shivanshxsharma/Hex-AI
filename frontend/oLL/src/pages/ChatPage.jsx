@@ -159,6 +159,10 @@ useEffect(() => {
 
   socket.on("connect", () => {
     console.log("✅ Connected to Socket.IO server");
+        socketRef.current.on("model_chunk", handleChunk);
+    socketRef.current.on("model_chunk_end", handleChunkEnd);
+
+
   });
 
   socket.on("connect_error", (err) => {
