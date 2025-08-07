@@ -10,6 +10,7 @@ import career from '../assets/success.png';
 import therapist from '../assets/talking.png';
 import movie from '../assets/watching-a-movie.png';
 import { useState, useEffect, useRef, useCallback } from "react";
+import { flushSync } from 'react-dom';
 import chatSuggestions from '../components/data';
 import Loader, { RingLoader, ZigzagLoader } from "../components/Loader";
 import ChatFace from "../components/ChatFace";
@@ -50,13 +51,15 @@ function ChatPage({ Headline }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [startGenerating, setStartGenerating] = useState(false);
 
-  // Refs to prevent race conditions
+  // Critical refs for streaming
   const socketRef = useRef(null);
   const chatIdRef = useRef(currentChatId);
-  const responseRef = useRef(""); // Critical: Use ref to prevent chunk loss
-  const isProcessingRef = useRef(false);
+  const streamingResponseRef = useRef("");
+  const isStreamingRef = useRef(false);
+  const chunkQueueRef = useRef([]);
+  const processingChunksRef = useRef(false);
 
-  // Update refs when state changes
+  // Update chatIdRef when currentChatId changes
   useEffect(() => {
     chatIdRef.current = currentChatId;
   }, [currentChatId]);
@@ -102,13 +105,13 @@ function ChatPage({ Headline }) {
       // Reset for new chat screen
       setConversation([]);
       setCurrentResponse("");
-      responseRef.current = "";
+      streamingResponseRef.current = "";
       setVisible(true);
     }
   }, [chatId, getToken]);
 
   // Chat extractor function
-  const chatExtractor = useCallback(async (token) => {
+  async function chatExtractor(token) {
     try {
       const res = await fetch(`${api_url}/api/history/chats?chatid=${chatId}`, {
         method: "GET",
@@ -119,7 +122,7 @@ function ChatPage({ Headline }) {
       });
 
       if (!res.ok) {
-        throw new Error(`Failed to fetch chat: ${res.status}`);
+        throw new Error("Failed to fetch chat");
       }
 
       const data = await res.json();
@@ -128,10 +131,10 @@ function ChatPage({ Headline }) {
       console.error("Error fetching chat:", error);
       return [];
     }
-  }, [chatId]);
+  }
 
   // History extractor function
-  const historyExtractor = useCallback(async (token, id) => {
+  async function historyExtractor(token, id) {
     console.log("Running history extraction");
     try {
       const res = await fetch(`${api_url}/api/history?user=${id}&personality=${Headline}`, {
@@ -143,7 +146,7 @@ function ChatPage({ Headline }) {
       });
 
       if (!res.ok) {
-        throw new Error(`Failed to fetch history: ${res.status}`);
+        throw new Error("Failed to fetch history");
       }
 
       const data = await res.json();
@@ -152,10 +155,10 @@ function ChatPage({ Headline }) {
       console.error("Error fetching history:", error);
       return [];
     }
-  }, [Headline]);
+  }
 
   // History handler function
-  const historyHandler = useCallback(async (finalResponse, token, chatId) => {
+  async function historyHandler(finalResponse, token, chatId) {
     try {
       const res = await fetch(`${api_url}/api/history`, {
         method: "POST",
@@ -174,7 +177,7 @@ function ChatPage({ Headline }) {
         const data = await res.json();
         console.log(data);
 
-        if (data.chatId && data.chatId !== chatId) {
+        if (data.chatId) {
           navigate(`/${Headline.toLowerCase()}/chats/${data.chatId}`);
         }
       } else {
@@ -184,17 +187,13 @@ function ChatPage({ Headline }) {
     } catch (error) {
       console.error("❌ Error while storing history:", error);
     }
-  }, [Headline, navigate]);
+  }
 
-  // Socket.IO setup
+  // Socket.IO setup - only once
   useEffect(() => {
     const socket = io(`${api_url}`, {
       transports: ["websocket"],
-      reconnection: true,
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
     });
-
     socketRef.current = socket;
 
     socket.on("connect", () => {
@@ -205,164 +204,164 @@ function ChatPage({ Headline }) {
       console.error("❌ Socket connection error:", err);
     });
 
-    socket.on("disconnect", (reason) => {
-      console.log("🔌 Disconnected from server:", reason);
-    });
-
     return () => {
       socket.disconnect();
     };
   }, []);
 
+  // Process chunk queue with requestAnimationFrame for smooth updates
+  const processChunkQueue = useCallback(() => {
+    if (processingChunksRef.current || chunkQueueRef.current.length === 0) return;
+    
+    processingChunksRef.current = true;
+    
+    const processNextChunk = () => {
+      if (chunkQueueRef.current.length === 0) {
+        processingChunksRef.current = false;
+        return;
+      }
+      
+      const chunk = chunkQueueRef.current.shift();
+      streamingResponseRef.current += chunk;
+      
+      // Force immediate DOM update
+      flushSync(() => {
+        setCurrentResponse(streamingResponseRef.current);
+      });
+      
+      // Process next chunk on next frame
+      requestAnimationFrame(processNextChunk);
+    };
+    
+    processNextChunk();
+  }, []);
+
   // Submit handler
-  const submitHandler = useCallback(async (text) => {
-    if (!text || !socketRef.current || isProcessingRef.current) return;
-
-    try {
-      isProcessingRef.current = true;
-      
-      // Emit to socket
-      socketRef.current.emit("prompt_By_User", text, Headline, currentChatId);
-      
-      // Add user message to conversation
-      const userMessage = { role: "user", parts: [{ text: text }] };
-      setConversation(prev => [...prev, userMessage]);
-      
-      // Store user message in history
-      const token = await getToken();
-      await historyHandler(userMessage, token, currentChatId);
-      
-      // Reset response state
-      responseRef.current = "";
-      setCurrentResponse("");
-      setIsLoading(true);
-      setVisible(false);
-      setStartGenerating(true);
-      
-    } catch (error) {
-      console.error("Error in submit handler:", error);
-      setIsLoading(false);
-      isProcessingRef.current = false;
+  async function submitHandler(text) {
+    if (text && socketRef.current && !isStreamingRef.current) {
+      try {
+        // Reset streaming state
+        streamingResponseRef.current = "";
+        chunkQueueRef.current = [];
+        isStreamingRef.current = true;
+        
+        socketRef.current.emit("prompt_By_User", text, Headline, currentChatId);
+        const token = await getToken();
+        console.log("submitting");
+        
+        setConversation(prev => [...prev, {role: "user", parts:[{text: text}]}]);
+        await historyHandler({role: "user", parts:[{text: text}]}, token, currentChatId);
+        
+        setIsLoading(true);
+        setVisible(false);
+        setCurrentResponse("");
+        setStartGenerating(true);
+      } catch (error) {
+        console.error("Error in submitHandler:", error);
+        isStreamingRef.current = false;
+      }
     }
-  }, [Headline, currentChatId, getToken, historyHandler]);
+  }
 
-  // FIXED: Socket response handling with useRef to prevent chunk loss
+  // CRITICAL FIX: Streaming response handler
   useEffect(() => {
     if (!startGenerating || !socketRef.current) return;
 
-    console.log("Setting up response handlers");
+    console.log("Setting up streaming handlers");
 
     const handleChunk = (chunk) => {
-      console.log("📦 Received chunk:", chunk, "Current length:", responseRef.current.length);
+      console.log("📦 Chunk received:", chunk);
       
-      // Use ref to prevent race conditions and chunk loss
-      responseRef.current += chunk;
+      // Add chunk to queue instead of direct state update
+      chunkQueueRef.current.push(chunk);
       
-      // Update state for UI
-      setCurrentResponse(responseRef.current);
+      // Process queue
+      processChunkQueue();
+      
       setIsLoading(false);
     };
 
     const handleChunkEnd = async () => {
-      console.log("🏁 Chunk stream ended");
+      console.log("🏁 Stream ended, final response:", streamingResponseRef.current);
       
       try {
         const token = await getToken();
-        const finalResponse = responseRef.current;
+        const finalResponse = streamingResponseRef.current;
         
         if (finalResponse.trim()) {
-          const modelMessage = { role: "model", parts: [{ text: finalResponse }] };
+          const modelMessage = {role: "model", parts:[{text: finalResponse}]};
           
-          // Add to conversation
           setConversation(prev => {
             const lastMessage = prev[prev.length - 1];
-            // Prevent duplicate messages
             if (lastMessage?.role === 'model' && lastMessage?.parts?.[0]?.text === finalResponse) {
               return prev;
             }
             return [...prev, modelMessage];
           });
           
-          // Store in history
           await historyHandler(modelMessage, token, chatIdRef.current);
         }
       } catch (error) {
-        console.error("Error in chunk end handler:", error);
+        console.error("Error in handleChunkEnd:", error);
       } finally {
-        // Reset state
-        responseRef.current = "";
-        setCurrentResponse("");
+        // Clean reset
+        streamingResponseRef.current = "";
+        chunkQueueRef.current = [];
+        isStreamingRef.current = false;
         setStartGenerating(false);
-        isProcessingRef.current = false;
+        setCurrentResponse("");
       }
-    };
-
-    const handleError = (error) => {
-      console.error("❌ Socket error:", error);
-      setIsLoading(false);
-      setStartGenerating(false);
-      isProcessingRef.current = false;
     };
 
     const socket = socketRef.current;
     
-    // CRITICAL: Remove ALL existing listeners to prevent duplicates
+    // Remove existing listeners completely
     socket.removeAllListeners("model_chunk");
     socket.removeAllListeners("model_chunk_end");
-    socket.removeAllListeners("error");
     
-    // Add new listeners
+    // Add fresh listeners
     socket.on("model_chunk", handleChunk);
     socket.on("model_chunk_end", handleChunkEnd);
-    socket.on("error", handleError);
 
-    // Cleanup function
     return () => {
-      if (socket) {
-        socket.off("model_chunk", handleChunk);
-        socket.off("model_chunk_end", handleChunkEnd);
-        socket.off("error", handleError);
-      }
+      socket.off("model_chunk", handleChunk);
+      socket.off("model_chunk_end", handleChunkEnd);
     };
-  }, [startGenerating, getToken, historyHandler]);
+  }, [startGenerating, processChunkQueue]);
 
   // Suggestions array setup
   useEffect(() => {
-    const personalityKey = Headline + " AI";
-    
-    switch (personalityKey) {
+    switch (Headline + " AI") {
       case 'Astro AI':
-        setSuggestionArray(chatSuggestions.astrology || []);
+        setSuggestionArray(chatSuggestions.astrology);
         break;
       case 'Code AI':
-        setSuggestionArray(chatSuggestions.code || []);
+        setSuggestionArray(chatSuggestions.code);
         break;
       case 'Friend AI':
-        setSuggestionArray(chatSuggestions.friend || []);
+        setSuggestionArray(chatSuggestions.friend);
         break;
       case 'Therapist AI':
-        setSuggestionArray(chatSuggestions.therapist || []);
+        setSuggestionArray(chatSuggestions.therapist);
         break;
       case 'Movie AI':
-        setSuggestionArray(chatSuggestions.movie || []);
+        setSuggestionArray(chatSuggestions.movie);
         break;
       case 'Study AI':
-        setSuggestionArray(chatSuggestions.study || []);
+        setSuggestionArray(chatSuggestions.study);
         break;
       case 'Career AI':
-        setSuggestionArray(chatSuggestions.career || []);
+        setSuggestionArray(chatSuggestions.career);
         break;
       default:
         setSuggestionArray([]);
     }
-    
-    console.log("Personality:", Headline);
+    console.log(Headline);
   }, [Headline]);
 
   return (
     <>
       <div className="relative w-screen ease-in-out h-screen overflow-hidden">
-        {/* Sign out confirmation popup */}
         <div
           className="fixed inset-0 z-20 flex justify-center items-center transition-all duration-500"
           style={{
@@ -377,19 +376,14 @@ function ChatPage({ Headline }) {
           />
         </div>
 
-        {/* Loading spinner */}
         {loading && (
           <div className="flex justify-center items-center h-screen w-screen z-100">
             <RingLoader />
           </div>
         )}
 
-        {/* Desktop Sidebar */}
         <div className="hidden md:block">
-          <div 
-            className="h-screen fixed left-0 top-0 transition-all duration-200 z-4" 
-            style={{ width: changeWidth }}
-          >
+          <div className="h-screen fixed left-0 top-0 transition-all duration-200 z-4" style={{width: changeWidth}}>
             <Sidebar 
               currentChatId={currentChatId} 
               personality={Headline} 
@@ -402,11 +396,8 @@ function ChatPage({ Headline }) {
           </div>
         </div>
 
-        {/* Mobile Sidebar */}
         <div className="block sm:hidden">
-          <div className={`fixed h-screen top-0 transition-transform duration-300 z-10 transform ${
-            mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          } w-[70vw] bg-amber-500`}>
+          <div className={`fixed h-screen top-0 transition-transform duration-300 z-10 transform ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} w-[70vw] bg-amber-500`}>
             <SidebarSmall 
               currentChatId={currentChatId} 
               personality={Headline} 
@@ -415,32 +406,17 @@ function ChatPage({ Headline }) {
               mobileMenuHandler={mobileMenuHandler}
             />
           </div>
-          
-          <button 
-            onClick={mobileMenuHandler}  
-            className='fixed left-0 w-[30px] flex justify-center items-center p-1 rounded-xl hover:bg-[#2E2E2E] aspect-square mt-3 h-[30px] z-7'
-          >
-            <img src={opt} alt="Menu" />
+          <button onClick={mobileMenuHandler} className='fixed left-0 w-[30px] flex justify-center items-center p-1 rounded-xl hover:bg-[#2E2E2E] aspect-square mt-3 h-[30px] z-7'>
+            <img src={opt} alt="" />
           </button>
         </div>
 
-        {/* Header */}
-        <div 
-          className="fixed right-0 top-0 transition-all duration-300 ease-in-out w-full z-0" 
-          style={{ width: otherDivWidthChange }}
-        >
-          <Header Headline={Headline} />
+        <div className="fixed right-0 top-0 transition-all duration-300 ease-in-out w-full z-0" style={{width: otherDivWidthChange}}>
+          <Header Headline={Headline}/>
         </div>
 
-        {/* Chat Face */}
-        <ChatFace  
-          isloading={isLoading} 
-          currentResponse={currentResponse} 
-          conversation={conversation} 
-          otherDivWidthChange={otherDivWidthChange} 
-        />
+        <ChatFace isloading={isLoading} currentResponse={currentResponse} conversation={conversation} otherDivWidthChange={otherDivWidthChange} />
 
-        {/* Suggestions */}
         <div
           style={{
             display: Headline === "Normal" ? "none" : "block",
@@ -463,11 +439,7 @@ function ChatPage({ Headline }) {
           />
         </div>
 
-        {/* Chat Input */}
-        <div 
-          className="fixed bottom-4 transition-all overflow-visible ease-in-out duration-300 right-0 w-full px-4 sm:px-12 pb-4 z-3" 
-          style={{ width: otherDivWidthChange }}
-        >
+        <div className="fixed bottom-4 transition-all overflow-visible ease-in-out duration-300 right-0 w-full px-4 sm:px-12 pb-4 z-3" style={{width: otherDivWidthChange}}>
           <ChatInput 
             startGenerating={startGenerating} 
             setisloading={setIsLoading} 
