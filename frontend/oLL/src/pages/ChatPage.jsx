@@ -276,7 +276,8 @@ const [startGenerating, setstartGenerating] = useState(false);
 async function submitHandler(text) {
     if(text && socketRef.current) {
     setstartGenerating(true);
-
+      setisloading(true);
+    
 
 
       socketRef.current.emit("prompt_By_User", text, Headline,currentChatId);
@@ -284,7 +285,6 @@ async function submitHandler(text) {
       console.log("submitting");
       setConversation(prev=>[...prev, {role: "user", parts:[{text: text}]}])
       await historyHandler({role: "user", parts:[{text: text}]}, token,currentChatId);
-      setisloading(true);
       setVisible(false)
       setCurrentResponse("");
     }
