@@ -319,7 +319,7 @@ useEffect(() => {
                 });
             }
 
-
+           setstartGenerating(true);
             return ""; 
         });
 
