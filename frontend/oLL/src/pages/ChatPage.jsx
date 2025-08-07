@@ -189,6 +189,7 @@ async function submitHandler(text) {
       setVisible(false)
       setCurrentResponse("");
       setstartGenerating(true);
+      await historyHandler({role: "user", parts:[{text: text}]}, token,currentChatId);
     }
 }
 
