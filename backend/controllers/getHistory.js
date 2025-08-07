@@ -3,7 +3,7 @@ const chatData = require("../models/chatData");
 async function getContext(chatid) {
   const userInfoMessage = {
     role: "user",
-    parts: [{ text: `User origin country - INDIA \n Use this context only when it helps personalize the experience.` }],
+    parts: [{ text: `Your name is Owl ,User origin country - INDIA \n Use this context only when it helps personalize the experience.` }],
   };
 
   // Case 1: No chatid provided
