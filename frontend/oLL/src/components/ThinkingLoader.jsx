@@ -1,52 +1,77 @@
 import React from 'react';
 
 const ThinkingLoader = ({
-  width = 120,
-  height = 60,
-  strokeWidth = 6,
-  text = "AI is thinking...",
+  text = "Thinking...",
   className = ""
 }) => {
-  const viewBoxWidth = width;
-  const viewBoxHeight = height;
-  const centerY = viewBoxHeight / 2;
-  
-  // Calculate zigzag path with 3 peaks
-  const pathData = `M${width * 0.08},${centerY} L${width * 0.25},${height * 0.17} L${width * 0.42},${centerY} L${width * 0.58},${height * 0.17} L${width * 0.75},${centerY} L${width * 0.92},${height * 0.17}`;
-
   return (
-    <div className={`flex flex-col items-center gap-5 ${className}`}>
-      {/* Box with moving border */}
-      <div className="relative w-16 h-12 rounded-lg bg-gray-800/50 border-2 border-transparent overflow-hidden">
-        {/* Moving border gradient */}
-        <div 
-          className="absolute inset-0 rounded-lg p-[2px] animate-[rotateBorder_2s_linear_infinite]"
-          style={{
-            background: 'conic-gradient(from 0deg, #8B5CF6, #EAB308, #EF4444, #8B5CF6)',
-            mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-            maskComposite: 'xor'
-          }}
-        >
-          {/* Inner transparent area */}
-          <div className="w-full h-full bg-gray-900 rounded-md"></div>
+    <div className={`inline-flex items-center justify-center ${className}`}>
+      <div className="relative px-6 py-3 bg-[#2e2e2e] backdrop-blur-sm rounded-2xl border border-gray-800/50">
+        {/* Animated border segments */}
+        <div className="absolute inset-0 rounded-2xl overflow-hidden">
+          {/* Top segment */}
+          <div 
+            className="absolute top-0 left-0 h-0.5 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"
+            style={{
+              width: '0%',
+              animation: 'drawTop 2s ease-in-out infinite'
+            }}
+          />
+          {/* Right segment */}
+          <div 
+            className="absolute top-0 right-0 w-0.5 bg-gradient-to-b from-indigo-500 to-cyan-500 rounded-full"
+            style={{
+              height: '0%',
+              animation: 'drawRight 2s ease-in-out infinite 0.5s'
+            }}
+          />
+          {/* Bottom segment */}
+          <div 
+            className="absolute bottom-0 right-0 h-0.5 bg-gradient-to-l from-cyan-500 to-emerald-500 rounded-full"
+            style={{
+              width: '0%',
+              animation: 'drawBottom 2s ease-in-out infinite 1s'
+            }}
+          />
+          {/* Left segment */}
+          <div 
+            className="absolute bottom-0 left-0 w-0.5 bg-gradient-to-t from-emerald-500 to-violet-500 rounded-full"
+            style={{
+              height: '0%',
+              animation: 'drawLeft 2s ease-in-out infinite 1.5s'
+            }}
+          />
+        </div>
+        
+        {/* Text with subtle glow */}
+        <div className="relative text-gray-300 text-sm font-light tracking-wide">
+          <span className="animate-pulse">{text}</span>
         </div>
       </div>
-
-      {text && (
-        <div className="text-purple-400 text-sm font-medium opacity-80 animate-[pulse_2s_ease-in-out_infinite]">
-          {text}
-        </div>
-      )}
-
+      
       <style jsx>{`
-
-        @keyframes rotateBorder {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
+        @keyframes drawTop {
+          0%, 25% { width: 0%; opacity: 0.3; }
+          12.5% { width: 100%; opacity: 1; }
+          100% { width: 100%; opacity: 0.1; }
+        }
+        
+        @keyframes drawRight {
+          0%, 25% { height: 0%; opacity: 0.3; }
+          12.5% { height: 100%; opacity: 1; }
+          100% { height: 100%; opacity: 0.1; }
+        }
+        
+        @keyframes drawBottom {
+          0%, 25% { width: 0%; opacity: 0.3; }
+          12.5% { width: 100%; opacity: 1; }
+          100% { width: 100%; opacity: 0.1; }
+        }
+        
+        @keyframes drawLeft {
+          0%, 25% { height: 0%; opacity: 0.3; }
+          12.5% { height: 100%; opacity: 1; }
+          100% { height: 100%; opacity: 0.1; }
         }
       `}</style>
     </div>
