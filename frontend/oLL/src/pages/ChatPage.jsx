@@ -185,7 +185,6 @@ async function submitHandler(text) {
       const token= await getToken();
       console.log("submitting");
       setConversation(prev=>[...prev, {role: "user", parts:[{text: text}]}])
-      await historyHandler({role: "user", parts:[{text: text}]}, token,currentChatId);
       setisloading(true);
       setVisible(false)
       setCurrentResponse("");
