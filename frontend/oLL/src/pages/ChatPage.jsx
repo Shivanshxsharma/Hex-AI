@@ -286,7 +286,7 @@ async function historyHandler(finalResponse, token,chatId) {
 
 
 useEffect(() => {
-    if (!startGenerating || !socketRef.current) return;
+    if ( !socketRef.current) return;
     
     console.log("getting response");
         console.log(currentResponse);
@@ -311,7 +311,6 @@ useEffect(() => {
             }
 
 
-            setstartGenerating(false);
             return ""; 
         });
 
@@ -333,7 +332,7 @@ useEffect(() => {
             socketRef.current.off("model_chunk_end", handleChunkEnd);
         }
     };
-}, [startGenerating]);
+}, []);
   
 
 
