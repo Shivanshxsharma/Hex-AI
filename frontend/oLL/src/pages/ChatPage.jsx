@@ -310,11 +310,11 @@ useEffect(() => {
                     }
                     setisAdded(true);
                    historyHandler({role: "model", parts:[{text: latestResponse}]}, token,chatIdRef.current);
+           setstartGenerating(false);
                     return [...prev, {role: "model", parts:[{text: latestResponse}]}];
                 });
             }
 
-           setstartGenerating(false);
             return ""; 
         });
 
