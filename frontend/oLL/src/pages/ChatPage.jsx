@@ -312,7 +312,6 @@ useEffect(() => {
             }
 
 
-            setstartGenerating(false);
             return ""; 
         });
 
