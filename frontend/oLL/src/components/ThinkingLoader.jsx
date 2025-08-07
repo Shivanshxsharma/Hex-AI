@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ThinkingLoader = ({ 
-  width = 120, 
-  height = 60, 
-  strokeWidth = 6, 
+const ThinkingLoader = ({
+  width = 120,
+  height = 60,
+  strokeWidth = 6,
   text = "AI is thinking...",
-  className = "" 
+  className = ""
 }) => {
   const viewBoxWidth = width;
   const viewBoxHeight = height;
@@ -16,55 +16,36 @@ const ThinkingLoader = ({
 
   return (
     <div className={`flex flex-col items-center gap-5 ${className}`}>
-      <div 
-        className="relative flex items-center justify-center"
-        style={{ width: `${width}px`, height: `${height}px` }}
-      >
-        <svg
-          width={width}
-          height={height}
-          viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
-          className="w-full h-full"
+      {/* Box with moving border */}
+      <div className="relative w-16 h-12 rounded-lg bg-gray-800/50 border-2 border-transparent overflow-hidden">
+        {/* Moving border gradient */}
+        <div 
+          className="absolute inset-0 rounded-lg p-[2px] animate-[rotateBorder_2s_linear_infinite]"
+          style={{
+            background: 'conic-gradient(from 0deg, #8B5CF6, #EAB308, #EF4444, #8B5CF6)',
+            mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            maskComposite: 'xor'
+          }}
         >
-          <defs>
-            <linearGradient id="zigzag-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#8B5CF6" />
-              <stop offset="50%" stopColor="#EAB308" />
-              <stop offset="100%" stopColor="#EF4444" />
-            </linearGradient>
-          </defs>
-          <path
-            d={pathData}
-            fill="none"
-            stroke="url(#zigzag-gradient)"
-            strokeWidth={strokeWidth}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeDasharray="200"
-            strokeDashoffset="200"
-            className="animate-[drawZigzag_2s_ease-in-out_infinite]"
-          />
-        </svg>
+          {/* Inner transparent area */}
+          <div className="w-full h-full bg-gray-900 rounded-md"></div>
+        </div>
       </div>
+
       {text && (
         <div className="text-purple-400 text-sm font-medium opacity-80 animate-[pulse_2s_ease-in-out_infinite]">
           {text}
         </div>
       )}
-      
+
       <style jsx>{`
-        @keyframes drawZigzag {
+
+        @keyframes rotateBorder {
           0% {
-            stroke-dashoffset: 200;
-            opacity: 0.5;
-          }
-          50% {
-            stroke-dashoffset: 0;
-            opacity: 1;
+            transform: rotate(0deg);
           }
           100% {
-            stroke-dashoffset: -200;
-            opacity: 0.5;
+            transform: rotate(360deg);
           }
         }
       `}</style>
