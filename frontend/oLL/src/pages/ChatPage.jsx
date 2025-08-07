@@ -155,7 +155,6 @@ useEffect(() => {
   const socket = io(`${api_url}`,{
     transports: ["websocket"],
   });
-  setstartGenerating(true);
   socketRef.current = socket;
 
   socket.on("connect", () => {
@@ -179,20 +178,7 @@ useEffect(() => {
 
 
 
-const [startGenerating, setstartGenerating] = useState(false);
 
-async function submitHandler(text) {
-    if(text && socketRef.current) {
-      socketRef.current.emit("prompt_By_User", text, Headline,currentChatId);
-      const token= await getToken();
-      console.log("submitting");
-      setConversation(prev=>[...prev, {role: "user", parts:[{text: text}]}])
-      await historyHandler({role: "user", parts:[{text: text}]}, token,currentChatId);
-      setisloading(true);
-      setVisible(false)
-      setCurrentResponse("");
-    }
-}
 
 
 
@@ -285,6 +271,26 @@ async function historyHandler(finalResponse, token,chatId) {
 
 
 
+const [startGenerating, setstartGenerating] = useState(false);
+
+async function submitHandler(text) {
+    if(text && socketRef.current) {
+    setstartGenerating(true);
+
+
+
+      socketRef.current.emit("prompt_By_User", text, Headline,currentChatId);
+      const token= await getToken();
+      console.log("submitting");
+      setConversation(prev=>[...prev, {role: "user", parts:[{text: text}]}])
+      await historyHandler({role: "user", parts:[{text: text}]}, token,currentChatId);
+      setisloading(true);
+      setVisible(false)
+      setCurrentResponse("");
+    }
+}
+
+
 
 useEffect(() => {
     if(!startGenerating||!socketRef.current) return;
@@ -335,6 +341,17 @@ useEffect(() => {
     };
 }, [startGenerating]);
   
+
+
+
+
+
+
+
+
+
+
+
 
 
 
