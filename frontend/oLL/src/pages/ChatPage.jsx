@@ -191,7 +191,6 @@ async function submitHandler(text) {
       setisloading(true);
       setVisible(false)
       setCurrentResponse("");
-      setstartGenerating(true);
     }
 }
 
