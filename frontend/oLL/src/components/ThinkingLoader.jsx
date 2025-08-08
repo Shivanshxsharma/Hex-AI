@@ -1,7 +1,26 @@
+import React from "react";
+
 export default function ThinkingLoader() {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="w-30 h-15 border-4 border-gray-300 border-t-red-600 rounded-xl animate-spin"></div>
+    <div
+      className="relative rounded-[20px] box-border blur-[12px] animate-pulse-loader"
+      style={{
+        height: "80px",
+        aspectRatio: "1",
+        padding: "10px",
+        mask: "conic-gradient(#000 0 0) content-box exclude, conic-gradient(#000 0 0)",
+        WebkitMask:
+          "conic-gradient(#000 0 0) content-box exclude, conic-gradient(#000 0 0)",
+      }}
+    >
+      <div
+        className="absolute inset-0 animate-spin-loader"
+        style={{
+          background:
+            "repeating-conic-gradient(#0000 0 5%, #C02942, #0000 20% 50%)",
+        }}
+      ></div>
     </div>
   );
 }
+

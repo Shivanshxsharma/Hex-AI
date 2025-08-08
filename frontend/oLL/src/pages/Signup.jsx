@@ -38,7 +38,7 @@ function Signup() {
               footerActionLink: "!text-violet-700 hover:!text-violet-300",
             },
             layout: {
-              logoImageUrl: "/Owl.logo.png",
+              logoImageUrl: "/hexagon (1).png",
               logoPlacement: "inside",
             }
           }} 

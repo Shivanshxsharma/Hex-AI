@@ -35,7 +35,7 @@ function Login() {
           },
           layout: {
             // socialButtonsVariant: 'blockButton',
-            logoImageUrl: "/Owl.logo.png",
+            logoImageUrl: "/hexagon (1).png",
             logoPlacement: "inside",
           },
         }}

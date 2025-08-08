@@ -6,9 +6,9 @@ import ThinkingLoader from './ThinkingLoader';
 const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloading }) => {
   const chatEndRef = useRef(null);
 
-  // useEffect(() => {
-  //   chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  // }, [conversation, currentResponse, isloading]);
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [conversation, currentResponse, isloading]);
 
   return (
     <div
