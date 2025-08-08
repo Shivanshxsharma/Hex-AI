@@ -279,9 +279,9 @@ async function historyHandler(finalResponse, token,chatId) {
 const [startGenerating, setstartGenerating] = useState(false);
 
 async function submitHandler(text) {
-      const token= await getToken();
     if(text && socketRef.current) {
       setisloading(true);
+      const token= await getToken();
       setConversation(prev=>[...prev, {role: "user", parts:[{text: text}]}])
       await historyHandler({role: "user", parts:[{text: text}]}, token,currentChatId);
       setstartGenerating(true)
