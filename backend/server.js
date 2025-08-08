@@ -22,7 +22,7 @@ const {clerkMiddleware} =require("@clerk/express");
 const historyrouter = require("./routes/historyrouter");
 app.use(
   cors({
-    origin: "https://owl-ai-frontend.onrender.com",
+    origin: "https://hex-ai-pj9u.onrender.com/",
     credentials: true,
   })
 );

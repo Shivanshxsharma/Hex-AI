@@ -4,7 +4,7 @@ const { genresponse } = require("../controllers/generateResponse");
 function socketConnection(server) {
   const io = new Server(server, {
 cors: {
-  origin: "https://owl-ai-frontend.onrender.com", 
+  origin: "https://hex-ai-pj9u.onrender.com/", 
   methods: ["GET", "POST"],
   credentials: true,
 },
