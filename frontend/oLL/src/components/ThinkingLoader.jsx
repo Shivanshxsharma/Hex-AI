@@ -1,4 +1,4 @@
-export default function ThinkingLoader({ size = 20, color = "#000", className = "" }) {
+export default function ThinkingLoader({ size = 20, color = "#fff", className = "" }) {
   const keyframes = `
     @keyframes pulse-animation {
       100% { box-shadow: 0 0 0 ${size * 1.5}px transparent }
@@ -25,30 +25,30 @@ export default function ThinkingLoader({ size = 20, color = "#000", className = 
 // Example usage with different configurations
 function PulseLoaderDemo() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white gap-8">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 gap-8">
       <div className="text-center">
-        <h2 className="text-black text-2xl mb-4">Default Pulse Loader</h2>
-        <PulseLoader />
+        <h2 className="text-white text-2xl mb-4">Default Pulse Loader</h2>
+        <ThinkingLoader />
       </div>
       
       <div className="text-center">
-        <h2 className="text-black text-2xl mb-4">Large Blue Pulse</h2>
-        <PulseLoader size={40} color="#3b82f6" />
+        <h2 className="text-white text-2xl mb-4">Large White Pulse</h2>
+        <ThinkingLoader size={40} color="#fff" />
       </div>
       
       <div className="text-center">
-        <h2 className="text-black text-2xl mb-4">Medium Green Pulse</h2>
-        <PulseLoader size={30} color="#10b981" />
+        <h2 className="text-white text-2xl mb-4">Medium White Pulse</h2>
+        <ThinkingLoader size={30} color="#fff" />
       </div>
       
       <div className="text-center">
-        <h2 className="text-black text-2xl mb-4">Small Red Pulse</h2>
-        <PulseLoader size={25} color="#ef4444" />
+        <h2 className="text-white text-2xl mb-4">Small White Pulse</h2>
+        <ThinkingLoader size={25} color="#fff" />
       </div>
       
       <div className="text-center">
-        <h2 className="text-black text-2xl mb-4">Custom Purple</h2>
-        <PulseLoader size={35} color="#8b5cf6" />
+        <h2 className="text-white text-2xl mb-4">Custom Light Gray</h2>
+        <ThinkingLoader size={35} color="#f3f4f6" />
       </div>
     </div>
   );
