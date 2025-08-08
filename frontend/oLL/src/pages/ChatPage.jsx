@@ -66,9 +66,9 @@ const [currentChatId, setcurrentChatId] = useState(chatId)
 
 
 useEffect(() => {
-  setLoading(true);
-  setTimeout(() => setLoading(false), 500); // Simulate fetch
-}, []);
+  if(!socketRef)setLoading(true);
+  else setTimeout(() => setLoading(false), 200); // Simulate fetch
+}, [socketRef]);
 
 const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 function mobileMenuHandler() {
