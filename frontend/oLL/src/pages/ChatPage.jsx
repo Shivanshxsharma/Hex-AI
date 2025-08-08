@@ -66,8 +66,13 @@ const [currentChatId, setcurrentChatId] = useState(chatId)
 
 
 useEffect(() => {
-  if(!socketRef.current)setLoading(true);
-  else setTimeout(() => setLoading(false), 200); // Simulate fetch
+  setLoading(!socketRef.current);
+  
+  // If you need the delay when socket becomes available:
+  if (socketRef.current) {
+    const timer = setTimeout(() => setLoading(false), 200);
+    return () => clearTimeout(timer);
+  }
 }, [socketRef.current]);
 
 const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
