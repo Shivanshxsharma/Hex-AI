@@ -96,7 +96,7 @@ useEffect(() => {
     return ( 
         <div className=" flex flex-row  h-full w-full transition-all duration-200  " >
             
-            <div className="h-full pt-3 relative bg-[#171717] transition-all ease-in-out duration-200" style={{width:barwidthChange}}>
+            <div className="h-full pt-3 relative bg-[#0d0d0d] transition-all ease-in-out duration-200" style={{width:barwidthChange}}>
                <div className="  flex flex-row transition-all duration-200 items-center w-full h-[15%] p-1 justify-center relative">
                 <div  
                   className="relative w-[95%] transition-all duration-200  backdrop-blur-2xl flex items-center"

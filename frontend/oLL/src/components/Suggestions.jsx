@@ -8,7 +8,7 @@ const Suggestions = ({ SuggestionArray,setfillSugg,setsuggestion }) => {
     <button onClick={()=>{setfillSugg(true) 
       setsuggestion(element)}}
       key={index}
-      className="inline-block rounded-[5px] text-wrap text-left hover:opacity-50 bg-[#2E2E2E] text-white p-2 mx-2"
+      className="inline-block rounded-[5px] text-wrap text-left hover:bg-[#2e2e2e] bg-[#171717] text-white p-2 mx-2"
     >
       {element}
     </button>

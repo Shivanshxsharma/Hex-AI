@@ -452,7 +452,7 @@ useEffect(() => {
           zIndex: 0
         }}
 
-       className=" w-[85vw] md:w-fit h-fit rounded-2xl  items-center transition-all bg-[#171717] duration-300 p-3 ">
+       className=" w-[85vw] md:w-fit h-fit rounded-2xl  items-center transition-all bg-[#0d0d0d] duration-300 p-3 ">
        <Suggestions setfillSugg={setfillSugg} setsuggestion={setsuggestion}  SuggestionArray={SuggestionArray}/>
       </div>
 
