@@ -95,7 +95,7 @@ useEffect(() => {
   fetchHistory();
 }, [isLoaded,currentChatId,toggledelete]); // re-run when user is lo
   return (
-    <div className=' overflow-hidden w-full relative  h-full flex flex-col justify-center bg-[#101010] border-[#2e2e2e] border-r-3 '>
+    <div className=' overflow-hidden w-full relative  h-full flex flex-col justify-center bg-[#101010] border-[#2e2e2e] md:border-r-3 '>
      <div className='absolute left-0 flex justify-between top-0 w-full h-[20%] '>
       <button onClick={mobileMenuHandler} className='absolute right-0 top-0 h-[20%] rounded-full m-1  hover:bg-[#2e2e2e] aspect-square'><img src={close} alt="" srcset="" /></button>
      <div className='w-[35%]  h-full flex justify-center items-center '>

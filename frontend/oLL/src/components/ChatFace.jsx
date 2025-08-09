@@ -13,7 +13,7 @@ const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloadin
   return (
     <div
       id="ChatFace"
-      className="flex    flex-col h-[75%] rounded-2xl overflow-y-auto w-full fixed right-0 top-10 transition-all duration-300 items-end pt-15 sm:px-8 md:pl-[6rem] md:pr-[2rem]"
+      className="flex flex-col h-[83%] rounded-2xl scroll-smooth overflow-y-auto w-full fixed right-0 top-10 transition-all duration-300 items-end pt-15 sm:px-8 md:pl-[6rem] md:pr-[2rem]"
       style={{ width: otherDivWidthChange }}
     >
       {conversation.map((msg, index) => (

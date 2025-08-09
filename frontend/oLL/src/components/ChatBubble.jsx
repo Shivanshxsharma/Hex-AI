@@ -9,8 +9,11 @@ function ChatBubble({ role, response }) {
       style={{
         border: role === "model" ? "2px solid #2E2E2E" : "none",
         backgroundColor: role === "user" ? "#2E2E2E" : "transparent",
+
       }}
-      className="p-5 w-fit transition-all duration-300 ease-in-out rounded-2xl"
+   className={`p-5 w-fit transition-all duration-300 ease-in-out ${
+    role === "user" ? "rounded-[60px]" : "rounded-[25px]"
+   }`}
     >
       <div
         className={`prose prose-invert max-w-[80vw] text-white ${

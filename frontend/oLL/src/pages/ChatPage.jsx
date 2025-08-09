@@ -445,7 +445,7 @@ useEffect(() => {
           bottom: '20vh',
           left: '50%',
           transform: visible
-            ? 'translate(-50%, 0)'             // show in center
+            ? 'translate(-50%, 15%)'             // show in center
             : 'translate(-50%, 1500px)',       // hide down below (exit same as entry)
           opacity: visible ? 1 : 0,
           transition: 'transform 0.6s ease, opacity 0.6s ease',

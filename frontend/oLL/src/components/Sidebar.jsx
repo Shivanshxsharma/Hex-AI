@@ -147,7 +147,7 @@ useEffect(() => {
                 <div style={{opacity:visibility} } id='history'  className=' transition-all duration-300 border-t-2 border-b-2 border-[#2e2e2e] w-full overflow-y-scroll p-3 h-[77%]'>
                  {
                     history.sort((a,b)=>{ return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();}).map((e,index)=>(
-                     <div key={index} className=' group h-[6%] relative w-full text-center transition-opacity text-[80%] duration-500 ease-in-out  p-0.5 mt-2  flex rounded-xl justify-center items-center  hover:bg-[#2e2e2e] bg-[#000000]  cursor-pointer'><Link 
+                     <div key={index} className=' group h-[6%] relative w-full text-center transition-opacity text-[80%] duration-500 ease-in-out  p-0.5 mt-2  flex rounded-xl justify-center items-center  hover:bg-[#2e2e2e]   cursor-pointer'><Link 
                      className='h-full w-full flex items-center z-2 hover:z-0 justify-center '
                       to={`/${personality.toLowerCase()}/chats/${e.chatid}`}>{e.title}</Link>
                       <button 
