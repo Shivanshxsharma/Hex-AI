@@ -68,7 +68,7 @@ const config = {
     }
     }
      console.log("citaion array :"+cits);
-     socket.emit("model_chunk_end");
+     socket.emit("model_chunk_end",cits);
 }
 
 

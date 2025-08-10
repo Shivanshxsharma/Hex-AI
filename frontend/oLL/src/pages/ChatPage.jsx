@@ -304,8 +304,9 @@ useEffect(() => {
         setisloading(false);
     };
 
-    const handleChunkEnd = async() => {
+    const handleChunkEnd = async(cits) => {
       const token= await getToken()  
+      console.log(cits);
         setCurrentResponse(latestResponse => {
             if (latestResponse.trim()) { 
                 setConversation(  prev => {
