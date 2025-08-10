@@ -59,11 +59,7 @@ const config = {
     const sources=addCitations(chunk);
      cits=sources;
     if (text) {
-     const citationsMarkdown = sources
-     .map((src) => `- [${src.title}](${src.uri})`)
-     .join("\n");
-     const textWithSources = `${text}\n\n**Sources:**\n${citationsMarkdown}`;
-      const finalText=(sources.length!=0)?textWithSources:text;
+      const finalText=text;
       socket.emit("model_chunk", finalText);
     }
     }
