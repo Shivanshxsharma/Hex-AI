@@ -209,7 +209,7 @@ const MarkdownRenderer = ({ content, sources }) => {
                 fontSize: "13px",
               }}
             >
-              {sources.map((src, i) => (
+              {sources?.map((src, i) => (
                 <li
                   key={i}
                   style={{
@@ -232,7 +232,7 @@ const MarkdownRenderer = ({ content, sources }) => {
                   }}
                 >
                   <a
-                    href={src.uri}
+                    href={src?.uri}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
@@ -250,7 +250,7 @@ const MarkdownRenderer = ({ content, sources }) => {
                       e.target.style.color = "#4ea1f3";
                     }}
                   >
-                    {src.length > 60 ? `${src.title.substring(0, 60)}...` : src.title}
+                    {src?.length > 60 ? `${src?.title.substring(0, 60)}...` : src?.title}
                   </a>
                 </li>
               ))}
