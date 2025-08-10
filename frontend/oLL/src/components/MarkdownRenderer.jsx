@@ -143,7 +143,7 @@ const MarkdownRenderer = ({ content, sources }) => {
       </div>
 
       {/* SMOOTH ANIMATED SOURCES SECTION */}
-      {sources.length > 0 && (
+      {sources?.length > 0 && (
         <div
           style={{
             marginTop: "0.75rem",
@@ -187,7 +187,7 @@ const MarkdownRenderer = ({ content, sources }) => {
             >
               ▼
             </span>
-            <span>Sources ({sources.length})</span>
+            <span>Sources ({sources?.length})</span>
           </button>
 
           <div
