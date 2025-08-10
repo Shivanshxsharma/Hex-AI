@@ -52,19 +52,34 @@ const config = {
   });
     
 
-   let cits=[]
-    for await(const chunk of response){
-    const text =  chunk.text;
+let cits = [];
+const seenUris = new Set();
+
+for await (const chunk of response) {
+    const text = chunk.text;
     console.log(text);
-    const sources=addCitations(chunk);
-     cits=sources;
+    
+    const sources = addCitations(chunk);
+    
+    const newCitations = sources.filter(source => {
+        if (!seenUris.has(source.uri)) {
+            seenUris.add(source.uri);
+            return true;
+        }
+        return false;
+    });
+    
+    cits.push(...newCitations);
+    
     if (text) {
-      const finalText=text;
-      socket.emit("model_chunk", finalText);
+        socket.emit("model_chunk", text);
     }
-    }
-     console.log("citaion array :"+cits);
-     socket.emit("model_chunk_end",cits);
+}
+
+console.log("citation array:", cits);
+// Add a small delay to ensure all chunks are processed
+    socket.emit("model_chunk_end", cits);
+;
 }
 
 
