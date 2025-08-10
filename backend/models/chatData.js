@@ -7,7 +7,7 @@ const chatSchema = new mongoose.Schema({
   personality:{type:String,required:true},
   messages: [{
   role: String,
-  parts: [ { text: String } ]
+  parts: [ { text: String,sources:[] } ]
 }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
