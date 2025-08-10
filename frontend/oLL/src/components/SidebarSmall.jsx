@@ -111,7 +111,7 @@ useEffect(() => {
 
      </div>
       <div id='history' className="w-full overflow-scroll h-[75%] absolute border-t-2 p-3 border-b-2 border-t-[#2e2e2e] border-b-[#2e2e2e] left-0 bottom-14">
-      {history.map((e, index) => (
+      {history.sort((a,b)=>{ return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()}).map((e, index) => (
         <div
           key={index}
           ref={(el) => (itemRefs.current[index] = el)}
