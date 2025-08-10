@@ -143,8 +143,8 @@ useEffect(() => {
                 </div>
 
                </div>
-               
-                <div style={{opacity:visibility} } id='history'  className=' transition-all duration-300 border-t-2 border-b-2 border-[#2e2e2e] w-full overflow-y-scroll p-3 h-[77%]'>
+                <Link to={`/${personality?.toLowerCase()}/new/`} ><div style={{opacity:visibility ,display:personality?"block":"none"}  } className='h-[8%] transition-all duration-100 p-2 w-full'  ><button className='h-full rounded-2xl bg-[#2e2e2e] w-full  ' type="button">New chat</button></div></Link>
+                <div style={{opacity:visibility} } id='history'  className=' transition-all duration-300 border-t-2 border-b-2  border-[#2e2e2e] w-full overflow-y-scroll p-3 h-[69%]'>
                  {
                     history.sort((a,b)=>{ return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();}).map((e,index)=>(
                      <div key={index} className=' group h-[6%] relative w-full text-center transition-opacity text-[80%] duration-500 ease-in-out  p-0.5 mt-2  flex rounded-xl justify-center items-center  hover:bg-[#2e2e2e]   cursor-pointer'><Link 
