@@ -186,10 +186,7 @@ const MarkdownRenderer = ({ content, sources }) => {
     </button>
 
     <div
-
-    id="ChatFace"
       style={{
-        overflowY: "scroll",
         maxHeight: showSources ? "320px" : "0",
         overflow: "hidden",
         transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -197,87 +194,100 @@ const MarkdownRenderer = ({ content, sources }) => {
         transform: showSources ? "translateY(0)" : "translateY(-10px)",
       }}
     >
-      <ul
+      <div
+        id="ChatFace"
         style={{
-          marginTop: "8px",
-          marginBottom: 0,
-          paddingLeft: "0",
-          listStyle: "none",
-          color: "#D1D5DB",
-          fontSize: "12px",
+          overflowY: "auto",
+          overflowX: "hidden",
+          maxHeight: "320px",
+          paddingRight: "4px",
+          scrollbarWidth: "thin",
+          scrollbarColor: "#4B5563 #1F2937",
         }}
+        className="[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-800 [&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-thumb]:rounded-sm [&::-webkit-scrollbar-thumb:hover]:bg-gray-500"
       >
-        {sources?.map((src, i) => (
-          <li
-            key={i}
-            style={{
-              margin: "8px 0",
-              transition: "all 0.3s ease-out",
-              transform: showSources ? "translateX(0)" : "translateX(-20px)",
-              opacity: showSources ? 1 : 0,
-              transitionDelay: `${i * 50}ms`,
-            }}
-          >
-            <a
-              href={src?.uri}
-              target="_blank"
-              rel="noopener noreferrer"
+        <ul
+          style={{
+            marginTop: "8px",
+            marginBottom: 0,
+            paddingLeft: "0",
+            listStyle: "none",
+            color: "#D1D5DB",
+            fontSize: "12px",
+          }}
+        >
+          {sources?.map((src, i) => (
+            <li
+              key={i}
               style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "12px",
-                padding: "12px",
-                backgroundColor: "rgba(31, 41, 55, 0.3)",
-                border: "1px solid rgba(55, 65, 81, 0.5)",
-                borderRadius: "8px",
-                color: "#D1D5DB",
-                textDecoration: "none",
-                fontSize: "12px",
-                lineHeight: "1.5",
-                transition: "all 0.2s ease-out",
+                margin: "8px 0",
+                transition: "all 0.3s ease-out",
+                transform: showSources ? "translateX(0)" : "translateX(-20px)",
+                opacity: showSources ? 1 : 0,
+                transitionDelay: `${i * 50}ms`,
               }}
-              className="hover:bg-gray-800/60 hover:border-red-600/80 hover:text-gray-100 hover:translate-x-1 group"
             >
-              <span
+              <a
+                href={src?.uri}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
-                  flexShrink: 0,
-                  width: "6px",
-                  height: "6px",
-                  backgroundColor: "#DC2626",
-                  borderRadius: "50%",
-                  marginTop: "6px",
-                  opacity: "0.6",
-                  transition: "opacity 0.2s ease",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "12px",
+                  padding: "12px",
+                  backgroundColor: "rgba(31, 41, 55, 0.3)",
+                  border: "1px solid rgba(55, 65, 81, 0.5)",
+                  borderRadius: "8px",
+                  color: "#D1D5DB",
+                  textDecoration: "none",
+                  fontSize: "12px",
+                  lineHeight: "1.5",
+                  transition: "all 0.2s ease-out",
                 }}
-                className="group-hover:opacity-90"
-              />
-              <div style={{ flex: 1 }}>
-                <div
+                className="hover:bg-gray-800/60 hover:border-red-600/80 hover:text-gray-100 hover:translate-x-1 group"
+              >
+                <span
                   style={{
-                    color: "#E5E7EB",
-                    fontWeight: "500",
-                    marginBottom: "4px",
+                    flexShrink: 0,
+                    width: "6px",
+                    height: "6px",
+                    backgroundColor: "#DC2626",
+                    borderRadius: "50%",
+                    marginTop: "6px",
+                    opacity: "0.6",
+                    transition: "opacity 0.2s ease",
                   }}
-                >
-                  {src?.title?.length > 60 
-                    ? `${src.title.substring(0, 60)}...` 
-                    : src?.title || 'Untitled Source'
-                  }
+                  className="group-hover:opacity-90"
+                />
+                <div style={{ flex: 1 }}>
+                  <div
+                    style={{
+                      color: "#E5E7EB",
+                      fontWeight: "500",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    {src?.title?.length > 60 
+                      ? `${src.title.substring(0, 60)}...` 
+                      : src?.title || 'Untitled Source'
+                    }
+                  </div>
+                  <div
+                    style={{
+                      color: "#9CA3AF",
+                      fontSize: "10px",
+                      opacity: "0.7",
+                    }}
+                  >
+                    {new URL(src.uri).hostname}
+                  </div>
                 </div>
-                <div
-                  style={{
-                    color: "#9CA3AF",
-                    fontSize: "10px",
-                    opacity: "0.7",
-                  }}
-                >
-                  {new URL(src.uri).hostname}
-                </div>
-              </div>
-            </a>
-          </li>
-        ))}
-      </ul>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </div>
 )}
