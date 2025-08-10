@@ -189,7 +189,9 @@ const MarkdownRenderer = ({ content, sources }) => {
 
     id="ChatFace"
       style={{
-        overflowY: "scroll",
+
+
+        overflowY: scroll,
         maxHeight: showSources ? "320px" : "0",
         overflow: "hidden",
         transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
