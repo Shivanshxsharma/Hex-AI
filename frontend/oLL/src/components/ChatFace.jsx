@@ -4,15 +4,23 @@ import Loader from './Loader';
 import ThinkingLoader from './ThinkingLoader';
 
 const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloading }) => {
-  const chatEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
+  const scrollTargetRef = useRef(null);
 
+  // Scroll to the transparent div only when loading starts
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [conversation, currentResponse, isloading]);
+    if (isloading && scrollTargetRef.current) {
+      scrollTargetRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  }, [isloading]);
 
   return (
     <div
       id="ChatFace"
+      ref={chatContainerRef}
       className="flex flex-col h-[83%] rounded-2xl scroll-smooth overflow-y-auto w-full fixed right-0 top-10 transition-all duration-300 items-end pt-15 sm:px-8 md:pl-[6rem] md:pr-[2rem]"
       style={{ width: otherDivWidthChange }}
     >
@@ -32,25 +40,28 @@ const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloadin
         </div>
       ))}
 
-      {isloading ? (
-        <div
-          ref={chatEndRef}
-          className="w-full transition-all duration-300 ease-in-out h-fit flex justify-start mt-6"
-        >
-          <ThinkingLoader />
-        </div>
+      {!isloading ? (
+        <>
+          <div className="w-full pl-7 md:pl-2  justify-start transition-all duration-300 ease-in-out h-fit gap-2.5 flex md:justify-start mt-6">
+            <ThinkingLoader />
+            <h1>Thinking...</h1>
+          </div>
+          {/* Transparent div that only appears during loading to fill space and scroll up */}
+          <div 
+            ref={scrollTargetRef}
+            className="w-full flex-grow min-h-[75vh] bg-transparent"
+          />
+        </>
       ) : currentResponse ? (
-        <div
-          ref={chatEndRef}
-          className="w-full transition-all duration-300 ease-in-out h-fit flex justify-start mt-6"
-        >
+        <div className="w-full transition-all duration-300 ease-in-out h-fit flex justify-start mt-6">
           <ChatBubble role="model" response={currentResponse} />
         </div>
-      ) : (
-        <div ref={chatEndRef} />
-      )}
+      ) : null}
     </div>
   );
 };
 
 export default ChatFace;
+
+
+

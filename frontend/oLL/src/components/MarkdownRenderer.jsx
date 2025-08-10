@@ -52,10 +52,12 @@ const MarkdownRenderer = ({ content, sources }) => {
 
             a: ({ href, children, ...props }) => (
               <a
+                
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
+                  textWrap:"wrap",
                   color: "#4ea1f3",
                   textDecoration: "underline",
                 }}
@@ -143,121 +145,140 @@ const MarkdownRenderer = ({ content, sources }) => {
       </div>
 
       {/* SMOOTH ANIMATED SOURCES SECTION */}
-      {sources?.length > 0 && (
-        <div
-          style={{
-            marginTop: "0.75rem",
-            borderTop: "1px solid #333",
-            paddingTop: "0.5rem",
-          }}
-        >
-          <button
-            onClick={() => setShowSources(!showSources)}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              background: "transparent",
-              color: "#4ea1f3",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "13px",
-              fontWeight: "500",
-              padding: "0.25rem 0",
-              margin: 0,
-              transition: "all 0.2s ease-in-out",
-              opacity: showSources ? 1 : 0.8,
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.opacity = "1";
-              e.target.style.transform = "translateX(2px)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.opacity = showSources ? "1" : "0.8";
-              e.target.style.transform = "translateX(0)";
-            }}
-          >
-            <span
-              style={{
-                display: "inline-block",
-                transform: showSources ? "rotate(180deg)" : "rotate(0deg)",
-                transition: "transform 0.3s ease",
-                fontSize: "10px",
-              }}
-            >
-              ▼
-            </span>
-            <span>Sources ({sources?.length})</span>
-          </button>
+{sources?.length > 0 && (
+  <div
+    style={{
+      marginTop: "0.75rem",
+      borderTop: "1px solid #374151",
+      paddingTop: "0.75rem",
+    }}
+  >
+    <button
+      onClick={() => setShowSources(!showSources)}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "0.5rem",
+        background: "transparent",
+        color: "#9CA3AF",
+        border: "none",
+        cursor: "pointer",
+        fontSize: "12px",
+        fontWeight: "500",
+        padding: "0.25rem 0",
+        margin: 0,
+        transition: "all 0.2s ease-out",
+        opacity: showSources ? 1 : 0.8,
+      }}
+      className="hover:text-gray-300 hover:translate-x-0.5"
+    >
+      <span
+        style={{
+          display: "inline-block",
+          transform: showSources ? "rotate(180deg)" : "rotate(0deg)",
+          transition: "transform 0.3s ease",
+          fontSize: "10px",
+        }}
+      >
+        ▼
+      </span>
+      <span>Sources ({sources?.length})</span>
+    </button>
 
-          <div
+    <div
+      style={{
+        overflowY: "auto",
+        maxHeight: showSources ? "320px" : "0",
+        overflow: "hidden",
+        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+        opacity: showSources ? 1 : 0,
+        transform: showSources ? "translateY(0)" : "translateY(-10px)",
+      }}
+    >
+      <ul
+        style={{
+          marginTop: "8px",
+          marginBottom: 0,
+          paddingLeft: "0",
+          listStyle: "none",
+          color: "#D1D5DB",
+          fontSize: "12px",
+        }}
+      >
+        {sources?.map((src, i) => (
+          <li
+            key={i}
             style={{
-              maxHeight: showSources ? "300px" : "0",
-              overflow: "hidden",
-              transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+              margin: "8px 0",
+              transition: "all 0.3s ease-out",
+              transform: showSources ? "translateX(0)" : "translateX(-20px)",
               opacity: showSources ? 1 : 0,
-              transform: showSources ? "translateY(0)" : "translateY(-10px)",
+              transitionDelay: `${i * 50}ms`,
             }}
           >
-            <ul
+            <a
+              href={src?.uri}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
-                marginTop: "8px",
-                marginBottom: 0,
-                paddingLeft: "0",
-                listStyle: "none",
-                color: "#ccc",
-                fontSize: "13px",
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "12px",
+                padding: "12px",
+                backgroundColor: "rgba(31, 41, 55, 0.3)",
+                border: "1px solid rgba(55, 65, 81, 0.5)",
+                borderRadius: "8px",
+                color: "#D1D5DB",
+                textDecoration: "none",
+                fontSize: "12px",
+                lineHeight: "1.5",
+                transition: "all 0.2s ease-out",
               }}
+              className="hover:bg-gray-800/60 hover:border-red-600/80 hover:text-gray-100 hover:translate-x-1 group"
             >
-              {sources?.map((src, i) => (
-                <li
-                  key={i}
+              <span
+                style={{
+                  flexShrink: 0,
+                  width: "6px",
+                  height: "6px",
+                  backgroundColor: "#DC2626",
+                  borderRadius: "50%",
+                  marginTop: "6px",
+                  opacity: "0.6",
+                  transition: "opacity 0.2s ease",
+                }}
+                className="group-hover:opacity-90"
+              />
+              <div style={{ flex: 1 }}>
+                <div
                   style={{
-                    margin: "6px 0",
-                    padding: "8px 12px",
-                    backgroundColor: "#1a1a1a",
-                    borderRadius: "6px",
-                    borderLeft: "3px solid #4ea1f3",
-                    transition: "all 0.2s ease",
-                    transform: showSources ? "translateX(0)" : "translateX(-20px)",
-                    transitionDelay: `${i * 0.05}s`,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = "no";
-                    e.target.style.transform = "translateX(4px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = "none";
-                    e.target.style.transform = "translateX(0)";
+                    color: "#E5E7EB",
+                    fontWeight: "500",
+                    marginBottom: "4px",
                   }}
                 >
-                  <a
-                    href={src?.uri}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      color: "#4ea1f3",
-                      textDecoration: "none",
-                      display: "block",
-                      transition: "color 0.2s ease",
-                      fontSize: "12px",
-                      lineHeight: "1.4",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.color = "red";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.color = "#4ea1f3";
-                    }}
-                  >
-                    {src?.length > 60 ? `${src?.title.substring(0, 60)}...` : src?.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
+                  {src?.title?.length > 60 
+                    ? `${src.title.substring(0, 60)}...` 
+                    : src?.title || 'Untitled Source'
+                  }
+                </div>
+                <div
+                  style={{
+                    color: "#9CA3AF",
+                    fontSize: "10px",
+                    opacity: "0.7",
+                  }}
+                >
+                  {new URL(src.uri).hostname}
+                </div>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)}
     </div>
   );
 };
