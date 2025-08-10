@@ -52,24 +52,19 @@ const config = {
   });
     
 
-   
+   let sources=[];
     for await(const chunk of response){
     const text =  chunk.text;
-    console.log(text);
-    const sources=addCitations(chunk);
+    sources=addCitations(chunk);
+    console.log("sources fetched :",sources);
+    console.log("sources fetched :");
     if (text) {
-     const citationsMarkdown = sources
-     .map((src) => `- [${src.title}](${src.uri})`)
-     .join("\n");
-     const textWithSources = `${text}\n\n**Sources:**\n${citationsMarkdown}`;
-    
-
-      const finalText=(sources.length!=0)?textWithSources:text;
+      const finalText=text;
       socket.emit("model_chunk", finalText);
     }
     }
-
-     socket.emit("model_chunk_end");
+    console.log(sources)
+     socket.emit("model_chunk_end",sources);
 }
 
 

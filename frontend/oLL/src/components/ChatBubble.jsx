@@ -3,7 +3,7 @@ import Typewriter from 'typewriter-effect';
 import MarkdownRenderer from "./MarkdownRenderer";
 import TextType from "./animations/TextType";
 
-function ChatBubble({ role, response }) {
+function ChatBubble({ role, response,sources }) {
   return (
     <div
       style={{
@@ -11,7 +11,7 @@ function ChatBubble({ role, response }) {
         backgroundColor: role === "user" ? "#2E2E2E" : "transparent",
 
       }}
-   className={`p-5 w-fit transition-all duration-300 ease-in-out ${
+   className={`${role==="user"?"p-3":"p-5"} w-fit transition-all duration-300 ease-in-out ${
     role === "user" ? "rounded-[60px]" : "rounded-[25px]"
    }`}
     >
@@ -20,7 +20,7 @@ function ChatBubble({ role, response }) {
           role === "model" ? "md:max-w-[50vw]" : "md:max-w-[80vw]"
         }`}
       >
-        <MarkdownRenderer content={response} />
+        <MarkdownRenderer content={response} sources={sources} role={role} />
       </div>
     </div>
   );
