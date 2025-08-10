@@ -304,7 +304,7 @@ useEffect(() => {
         setisloading(false);
     };
 
-    const handleChunkEnd = async(sources) => {
+    const handleChunkEnd = async() => {
       const token= await getToken()  
         setCurrentResponse(latestResponse => {
             if (latestResponse.trim()) { 
@@ -313,11 +313,10 @@ useEffect(() => {
                     if (lastMessage?.role === 'model' && lastMessage?.parts?.[0]?.text === latestResponse) {
                         return prev;
                     }
-                    console.log(sources)
                     setisAdded(true);
-                   historyHandler({role: "model", parts:[{text: latestResponse, sorces:sources}]}, token,chatIdRef.current);
-                   setstartGenerating(false);
-                    return [...prev, {role: "model", parts:[{text: latestResponse, sorces:sources}]}];
+                   historyHandler({role: "model", parts:[{text: latestResponse}]}, token,chatIdRef.current);
+           setstartGenerating(false);
+                    return [...prev, {role: "model", parts:[{text: latestResponse}]}];
                 });
             }
 
@@ -334,8 +333,7 @@ useEffect(() => {
     
     // Then add new listeners
     socketRef.current.on("model_chunk", handleChunk);
-    socketRef.current.on("model_chunk_end", (sources)=>{
-      handleChunkEnd(sources)});
+    socketRef.current.on("model_chunk_end", handleChunkEnd);
 
     return () => {
         if (socketRef.current) {
