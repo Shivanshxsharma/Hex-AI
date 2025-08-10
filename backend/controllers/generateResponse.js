@@ -52,11 +52,12 @@ const config = {
   });
     
 
-   
+   let cits=[]
     for await(const chunk of response){
     const text =  chunk.text;
     console.log(text);
     const sources=addCitations(chunk);
+     cits=sources;
     if (text) {
      const citationsMarkdown = sources
      .map((src) => `- [${src.title}](${src.uri})`)
@@ -66,7 +67,7 @@ const config = {
       socket.emit("model_chunk", finalText);
     }
     }
-
+     console.log("citaion array :"+cits);
      socket.emit("model_chunk_end");
 }
 
