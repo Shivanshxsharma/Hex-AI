@@ -3,7 +3,7 @@ import Typewriter from 'typewriter-effect';
 import MarkdownRenderer from "./MarkdownRenderer";
 import TextType from "./animations/TextType";
 
-function ChatBubble({ role, response }) {
+function ChatBubble({ role, response ,sources }) {
   return (
     <div
       style={{
@@ -20,7 +20,7 @@ function ChatBubble({ role, response }) {
           role === "model" ? "md:max-w-[50vw]" : "md:max-w-[80vw]"
         }`}
       >
-        <MarkdownRenderer content={response} />
+        <MarkdownRenderer content={response} sources={sources} />
       </div>
     </div>
   );

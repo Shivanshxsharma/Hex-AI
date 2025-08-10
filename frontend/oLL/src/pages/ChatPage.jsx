@@ -65,15 +65,21 @@ const [currentChatId, setcurrentChatId] = useState(chatId)
   }, []);
 
 
+
+
 useEffect(() => {
-  setLoading(!socketRef.current);
-  
-  // If you need the delay when socket becomes available:
   if (socketRef.current) {
+    // Socket is available, brief loading period
+    setLoading(true);
     const timer = setTimeout(() => setLoading(false), 200);
     return () => clearTimeout(timer);
+  } else {
+    // No socket available
+    setLoading(false);
   }
 }, [socketRef.current]);
+
+
 
 const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 function mobileMenuHandler() {
@@ -315,9 +321,9 @@ useEffect(() => {
                         return prev;
                     }
                     setisAdded(true);
-                   historyHandler({role: "model", parts:[{text: latestResponse}]}, token,chatIdRef.current);
-           setstartGenerating(false);
-                    return [...prev, {role: "model", parts:[{text: latestResponse}]}];
+                   historyHandler({role: "model", parts:[{text: latestResponse , sorces:cits}]}, token,chatIdRef.current);
+                    setstartGenerating(false);
+                    return [...prev, {role: "model", parts:[{text: latestResponse, sorces:cits}]}];
                 });
             }
 

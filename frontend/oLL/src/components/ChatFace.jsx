@@ -27,6 +27,7 @@ const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloadin
             role={msg.role}
             textByUser={msg.parts[0].text}
             response={msg.parts[0].text}
+            sources={msg.parts[0].sources}
           />
         </div>
       ))}

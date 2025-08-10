@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import vscDarkPlus from "react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus";
 
-const MarkdownRenderer = ({ content, sources = [1,2,3] }) => {
+const MarkdownRenderer = ({ content, sources }) => {
   const [showSources, setShowSources] = useState(false);
 
   return (
@@ -232,7 +232,7 @@ const MarkdownRenderer = ({ content, sources = [1,2,3] }) => {
                   }}
                 >
                   <a
-                    href={src}
+                    href={src.uri}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
@@ -250,7 +250,7 @@ const MarkdownRenderer = ({ content, sources = [1,2,3] }) => {
                       e.target.style.color = "#4ea1f3";
                     }}
                   >
-                    {src.length > 60 ? `${src.substring(0, 60)}...` : src}
+                    {src.length > 60 ? `${src.title.substring(0, 60)}...` : src.title}
                   </a>
                 </li>
               ))}
