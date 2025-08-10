@@ -321,9 +321,9 @@ useEffect(() => {
                         return prev;
                     }
                     setisAdded(true);
-                   historyHandler({role: "model", parts:[{text: latestResponse , sorces:cits}]}, token,chatIdRef.current);
+                   historyHandler({role: "model", parts:[{text: latestResponse , sources:cits}]}, token,chatIdRef.current);
                     setstartGenerating(false);
-                    return [...prev, {role: "model", parts:[{text: latestResponse, sorces:cits}]}];
+                    return [...prev, {role: "model", parts:[{text: latestResponse, sources:cits}]}];
                 });
             }
 
