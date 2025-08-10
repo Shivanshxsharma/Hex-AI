@@ -44,7 +44,7 @@ const [isloading, setisloading] = useState(false);
 const  [isAdded, setisAdded] = useState(false)
 const [signoutPopup, setsignoutPopup] = useState(false);
 const [fillSugg, setfillSugg] = useState(false)
-const{user}=useUser();
+const{user,isLoaded}=useUser();
 const {getToken}=useAuth();
 const {chatId}=useParams();
 
@@ -57,6 +57,10 @@ const [currentChatId, setcurrentChatId] = useState(chatId)
   const [visible, setVisible] = useState(false);
   const [suggestionMenu, setsuggestionMenu] = useState(true);
   useEffect(() => {
+    if(isLoaded&&!user||!user.id){
+      navigate("/")
+    }
+
     const timer = setTimeout(() => {
       setVisible(true);
     }, 50); // trigger after render
@@ -99,7 +103,6 @@ useEffect(() => {
 
 useEffect(() => {
   setcurrentChatId(chatId); // chatId will be undefined or null on /newchat
-
   async function fetchChat() {
     const token = await getToken();
     const data = await chatExtractor(token);
@@ -132,6 +135,7 @@ async function chatExtractor(token) {
     });
 
     if (!res.ok) {
+      navigate("/")
       throw new Error("Failed to fetch chat");
     }
 

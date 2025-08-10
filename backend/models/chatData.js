@@ -2,6 +2,11 @@
 const mongoose = require("mongoose");
 
 const chatSchema = new mongoose.Schema({
+    userId: {
+    type: String,
+    required: true,
+    index: true 
+  },
   userHistory: { type: mongoose.Schema.Types.ObjectId, ref: "history" },
   title: { type: String, default: "Untitled Chat" },
   personality:{type:String,required:true},

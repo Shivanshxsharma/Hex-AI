@@ -26,6 +26,7 @@ historyrouter.post("/history", async (req, res) => {
    const title=await generateTitleFromGemini(response);
    console.log(title);
     const newChat = await chatData.create({
+      userId:userId,
       title,
       personality,
       messages: [response],
@@ -117,11 +118,14 @@ historyrouter.get("/history", async (req, res) => {
 historyrouter.get("/history/chats", async (req, res) => {
   try {
     const { chatid } = req.query;
-
+    const {userId}=getAuth(req);
     if (!chatid) {
       return res.status(400).json({ error: "Missing chat ID" });
     }
-    const chat = await chatData.findById(chatid);
+    const chat = await chatData.findOne({
+      _id: chatid,
+      userId: userId
+    });
 
     if (!chat) {
       return res.status(404).json({ error: "No chat found" });
