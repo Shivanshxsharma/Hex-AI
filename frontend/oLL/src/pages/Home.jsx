@@ -54,6 +54,23 @@ function Home() {
     // setHeadline(service);
   }
 
+
+
+
+  const greetings = [
+  `Hi again! ${user.firstName}`,
+  `Welcome back, ${user.firstName} — let’s make this interesting`,
+  `Good to see you, ${user.firstName}! Got something on your mind?`,
+  `Hey ${user.firstName} — ready for another round?`,
+  `${user.firstName}! You just made my day`,
+  `Back again, ${user.firstName}? Let’s get to it`,
+  `Hello again, ${user.firstName} — what’s the plan?`,
+  `Always a pleasure, ${user.firstName}`,
+  `Glad you’re here, ${user.firstName} — I was just thinking of you`,
+  `${user.firstName}! Shall we pick up where we left off?`
+];
+
+
   return (
     <>
       <div className="relative w-screen ease-in-out h-screen overflow-hidden">
@@ -103,13 +120,14 @@ function Home() {
         {  
           !user? <SignupBoard/> : 
         <div className="flex flex-col fixed right-0  top-10 h-[75vh] transition-all duration-300 ease-in-out z-10"  >
-          <div className="flex justify-center mt-4 text-2xl">
-            <h1>Hi again! {user?.firstName}</h1>
+          <div className="flex justify-center mt-4 text-[85%] sm:text-2xl">
+            <h1>{greetings[Math.floor(Math.random() * greetings.length)]}</h1>
           </div>
           <div className="flex  justify-center mt-5 text-2xl ">
 
           <TextType
             text={["	Who do you want to talk to today?"]}
+            
             typingSpeed={75}
             pauseDuration={1500}
             showCursor={true}
@@ -118,18 +136,18 @@ function Home() {
           </div>
 
           {/* ✅ First Row of Cards — Responsive Gap Added */}
-          <div className="justify-center p-2 mt-2 flex flex-wrap gap-6 sm:gap-8 transition-all duration-200 md:gap-10 lg:gap-12 xl:gap-14 w-screen z-10"  style={{width:otherDivWidthChange}}  >
-            <Link to='/astro/new/'><PersonalityCard name="Astro AI" img={horoscope} pageChangeHandler={pageChangeHandler} /></Link>
-            <Link to='/therapist/new/'><PersonalityCard name="Therapist AI" img={therapist} pageChangeHandler={pageChangeHandler} /></Link>
-            <Link to='/code/new/'><PersonalityCard name="Code AI" img={coding} pageChangeHandler={pageChangeHandler} /></Link>
-            <Link to='/movie/new/'><PersonalityCard name="Movie AI" img={movie} pageChangeHandler={pageChangeHandler} /></Link>
+          <div className="justify-center p-2 mt-8 flex flex-wrap gap-6 sm:gap-8 transition-all duration-200 md:gap-10 lg:gap-12 xl:gap-14 w-screen z-10"  style={{width:otherDivWidthChange}}  >
+            <Link to='/astro/new/'><PersonalityCard name="Astro Expert" img={horoscope} pageChangeHandler={pageChangeHandler} /></Link>
+            <Link to='/therapist/new/'><PersonalityCard name="Therapist Expert" img={therapist} pageChangeHandler={pageChangeHandler} /></Link>
+            <Link to='/code/new/'><PersonalityCard name="Code Expert" img={coding} pageChangeHandler={pageChangeHandler} /></Link>
+            <Link to='/movie/new/'><PersonalityCard name="Movie Expert" img={movie} pageChangeHandler={pageChangeHandler} /></Link>
           </div>
 
           {/* ✅ Second Row of Cards — Responsive Gap Added */}
           <div className="justify-center p-5 flex flex-wrap gap-6 sm:gap-8 transition-all duration-200 md:gap-10 lg:gap-12 xl:gap-14 z-10" style={{width:otherDivWidthChange}}  >
-            <Link to='/friend/new/'><PersonalityCard name="Friend AI" img={friend} pageChangeHandler={pageChangeHandler} /></Link>
-            <Link to='/study/new/'><PersonalityCard name="Study AI" img={study} pageChangeHandler={pageChangeHandler} /></Link>
-            <Link to='/career/new/'><PersonalityCard name="Career AI" img={career} pageChangeHandler={pageChangeHandler} /></Link>
+            <Link to='/friend/new/'><PersonalityCard name=" Your Ai Friend" img={friend} pageChangeHandler={pageChangeHandler} /></Link>
+            <Link to='/study/new/'><PersonalityCard name="Study Expert" img={study} pageChangeHandler={pageChangeHandler} /></Link>
+            <Link to='/career/new/'><PersonalityCard name="Career Expert" img={career} pageChangeHandler={pageChangeHandler} /></Link>
           </div>
         
         </div>

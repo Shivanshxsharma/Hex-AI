@@ -4,7 +4,16 @@ import stop from '../assets/stop-button.png';
 import Suggestions from "./Suggestions";
 function ChatInput({startGenerating,setstartGenerating,setisloading,SuggestionArray,fillSugg,suggestion,Headline,submitHandler}) {
   const textareaRef = useRef(null);
-  
+  const aiPlaceholders = {
+  Normal: "Ask me anything — from quick facts to deep explanations...",
+  Astro: "Curious about black holes, planets, or galaxies? Ask away...",
+  Friend: "Need someone to talk to? Share your thoughts here...",
+  Code: "Describe your coding problem or paste your code snippet...",
+  Movies: "Looking for movie recommendations or reviews? Let’s talk cinema...",
+  Career: "Need advice on resumes, interviews, or career paths?",
+  Study: "Ask me about your subject, topic, or concept you’re learning...",
+  Therapist: "Tell me what’s on your mind — I’m here to listen..."
+};
 
 
   useEffect(() => {
@@ -43,7 +52,7 @@ function ChatInput({startGenerating,setstartGenerating,setisloading,SuggestionAr
     }} }
       onInput={handleInput}
       className=" focus:outline-none  p-3 text-left mt-0 align-top w-full  h-[7.5vh] max-h-full overflow-y-auto bg-[#202020]  resize-none scrollbar-thin scrollbar-thumb-[#888] scrollbar-track-transparent"
-      placeholder={`Ask ${Headline || ""}`}
+      placeholder={`${aiPlaceholders[Headline]||"Ask me anything..."}`}
 
 
     ></textarea>
