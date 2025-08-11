@@ -56,18 +56,44 @@ function Home() {
 
 
 
-
-  const greetings = [
-  `Hi again! ${user.firstName}`,
-  `Welcome back, ${user.firstName} — let’s make this interesting`,
-  `Good to see you, ${user.firstName}! Got something on your mind?`,
-  `Hey ${user.firstName} — ready for another round?`,
-  `${user.firstName}! You just made my day`,
-  `Back again, ${user.firstName}? Let’s get to it`,
-  `Hello again, ${user.firstName} — what’s the plan?`,
-  `Always a pleasure, ${user.firstName}`,
-  `Glad you’re here, ${user.firstName} — I was just thinking of you`,
-  `${user.firstName}! Shall we pick up where we left off?`
+const greetings = [
+  `Hi ${user.firstName}`,
+  `Hey ${user.firstName}`,
+  `Hello ${user.firstName}`,
+  `Hi there, ${user.firstName}`,
+  `Hey there, ${user.firstName}`,
+  `Good to see you, ${user.firstName}`,
+  `Welcome back, ${user.firstName}`,
+  `Hi again, ${user.firstName}`,
+  `Hey ${user.firstName}, how's it going?`,
+  `Hello ${user.firstName}, how are you?`,
+  `Hi ${user.firstName}, what's up?`,
+  `Hey ${user.firstName}, good to see you`,
+  `${user.firstName}! Nice to see you again`,
+  `Oh hey ${user.firstName}`,
+  `${user.firstName}, you're back!`,
+  `Look who it is - ${user.firstName}!`,
+  `Well hello, ${user.firstName}`,
+  `${user.firstName}, perfect timing`,
+  `Hey ${user.firstName}, glad you're here`,
+  `${user.firstName}! How have you been?`,
+  `Hi ${user.firstName}, ready for today?`,
+  `Hey ${user.firstName}, what brings you here?`,
+  `${user.firstName}! What's on your mind?`,
+  `Hey ${user.firstName}, what can I help you with?`,
+  `Hi ${user.firstName}, what are we working on today?`,
+  `${user.firstName}, what's the plan?`,
+  `Hey ${user.firstName}, ready to get started?`,
+  `Hi ${user.firstName}, let's see what we can do`,
+  `${user.firstName}! What should we tackle first?`,
+  `Hey ${user.firstName}, I'm here when you're ready`,
+  `Well well, look who decided to show up - ${user.firstName}!`,
+  `${user.firstName}! Ready to make some magic happen?`,
+  `Hey ${user.firstName}, let's turn today into something amazing`,
+  `${user.firstName}! Time to unleash some creativity`,
+  `${user.firstName}! Let's cook up something brilliant`,
+  `Hey ${user.firstName}, what wild idea are we chasing today?`,
+  `Oh snap, it's ${user.firstName}! Let's do this thing`
 ];
 
 
