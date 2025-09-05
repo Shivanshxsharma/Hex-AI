@@ -16,7 +16,7 @@ function ChatBubble({ role, response ,sources }) {
    }`}
     >
       <div
-        className={`prose prose-invert max-w-[80vw] text-white ${
+        className={`prose prose-invert max-w-[50vw] text-white ${
           role === "model" ? "md:max-w-[50vw]" : "md:max-w-[80vw]"
         }`}
       >
