@@ -16,8 +16,8 @@ function ChatBubble({ role, response ,sources }) {
    }`}
     >
       <div
-        className={`prose prose-invert max-w-[50vw] text-white ${
-          role === "model" ? "md:max-w-[50vw]" : "md:max-w-[80vw]"
+        className={`prose prose-invert w-fit max-w-[50vw] text-white ${
+          role === "model" ? "md:max-w-[50vw]" : "md:max-w-[50vw]"
         }`}
       >
         <MarkdownRenderer content={response} sources={sources} />
