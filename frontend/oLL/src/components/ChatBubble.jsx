@@ -1,7 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import Typewriter from 'typewriter-effect';
 import MarkdownRenderer from "./MarkdownRenderer";
-import TextType from "./animations/TextType";
+import TextType from "./animations/TextType"; 
 
 function ChatBubble({ role, response ,sources }) {
   return (
