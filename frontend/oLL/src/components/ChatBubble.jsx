@@ -12,12 +12,12 @@ function ChatBubble({ role, response ,sources }) {
 
       }}
    className={`${role==="user"?"p-3":"p-5"} w-fit transition-all duration-300 ease-in-out ${
-    role === "user" ? "rounded-[60px]" : "rounded-[25px]"
+    role === "user" ? "rounded-[40px]" : "rounded-[25px]"
    }`}
     >
       <div
-        className={`prose prose-invert max-w-[80vw] text-white ${
-          role === "model" ? "md:max-w-[50vw]" : "md:max-w-[80vw]"
+        className={`prose prose-invert w-fit max-w-[80vw] text-white ${
+          role === "model" ? "md:max-w-[50vw]" : "md:max-w-[30vw]"
         }`}
       >
         <MarkdownRenderer content={response} sources={sources} />
