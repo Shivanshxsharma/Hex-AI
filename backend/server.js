@@ -15,8 +15,7 @@ app.use(express.json());
 
 
 
-console.log(process.env.CLERK_PUBLISHABLE_KEY);
-console.log(process.env.CLERK_SECRET_KEY);
+
 
 const {clerkMiddleware} =require("@clerk/express");
 const historyrouter = require("./routes/historyrouter");

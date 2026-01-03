@@ -4,7 +4,6 @@ const dotenv = require("dotenv");
 const getContext = require("./getHistory");
 dotenv.config({path:"../backend/.env"});
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-console.log("Loaded API Key:", GEMINI_API_KEY); 
 const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY});
 
 
