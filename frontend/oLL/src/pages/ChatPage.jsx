@@ -82,7 +82,7 @@ useEffect(() => {
     return () => clearTimeout(timer);
   } else {
     // No socket available
-    setLoading(false);
+    setLoading(true);
   }
 }, [socketRef.current]);
 
