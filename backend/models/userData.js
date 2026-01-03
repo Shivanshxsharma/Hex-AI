@@ -6,6 +6,7 @@ const userSchema =new mongoose.Schema({
     email:String,
     imageUrl: String,
     createdAt: { type: Date, default: Date.now },
+    apikey: String
 })
 
 module.exports = mongoose.model("User", userSchema);

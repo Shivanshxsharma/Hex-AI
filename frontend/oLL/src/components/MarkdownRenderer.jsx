@@ -51,20 +51,23 @@ const MarkdownRenderer = ({ content, sources }) => {
             ),
 
             a: ({ href, children, ...props }) => (
-              <a
-                
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  textWrap:"wrap",
-                  color: "#4ea1f3",
-                  textDecoration: "underline",
-                }}
-                {...props}
-              >
-                {children}
-              </a>
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    display: "inline-block", 
+    maxWidth: "100%",        
+    overflowWrap: "anywhere", 
+    wordBreak: "break-all",   
+    color: "#4ea1f3",
+    textDecoration: "underline",
+    whiteSpace: "normal",     
+  }}
+  {...props}
+>
+  {children}
+</a>
             ),
 
             code({ inline, className, children, ...props }) {
@@ -144,7 +147,21 @@ const MarkdownRenderer = ({ content, sources }) => {
         </ReactMarkdown>
       </div>
 
-      {/* SMOOTH ANIMATED SOURCES SECTION */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 {sources?.length > 0 && (
   <div
     style={{

@@ -56,6 +56,9 @@ const [currentChatId, setcurrentChatId] = useState(chatId)
 
   const [visible, setVisible] = useState(false);
   const [suggestionMenu, setsuggestionMenu] = useState(true);
+
+
+
   useEffect(() => {
     if(isLoaded&&!user||!user.id){
       navigate("/")
@@ -95,7 +98,6 @@ function mobileMenuHandler() {
 
 
 const chatIdRef = useRef(currentChatId);
-
 useEffect(() => {
   chatIdRef.current = currentChatId;
 }, [currentChatId]);
@@ -169,6 +171,9 @@ async function chatExtractor(token) {
 useEffect(() => {
   const socket = io(`${api_url}`,{
     transports: ["websocket"],
+    auth:{
+      userId:user?.id
+    }
   });
   socketRef.current = socket;
 
@@ -181,7 +186,9 @@ useEffect(() => {
     console.error("❌ Socket connection error:", err);
   });
 
-  // 🔥 Add these once — not inside submitHandler!
+  socket.on("init_Error",()=>{
+    window.alert("cant initilize the model right know please try again after some time")
+  })
   return () => {
     socket.disconnect();
   };

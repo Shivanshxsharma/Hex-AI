@@ -2,7 +2,9 @@ const User = require("../models/userData");
 const { clerkClient } = require("@clerk/express");
 
 async function createNewUser(clerkId) {
-  const existingUser = await getUser(clerkId);
+
+  try {
+      const existingUser = await getUser(clerkId);
 
   if (!existingUser) {
     const clerkUser = await clerkClient.users.getUser(clerkId);
@@ -18,11 +20,20 @@ async function createNewUser(clerkId) {
   }
 
   return existingUser;
+  } catch (error) {
+    console.error(error+ "adding user")
+  }
+
 }
 
 async function getUser(clerkId) {
-  const user = await User.findOne({ clerkId });
-  return user;
+  try {
+     const user = await User.findOne({ clerkId });
+  return user; 
+  } catch (error) {
+    console.error(error + "geetting user")
+  }
+
 }
 
 module.exports = { createNewUser, getUser };

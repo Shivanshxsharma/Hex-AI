@@ -8,6 +8,7 @@ const history = require("../models/history");
 const chatData = require("../models/chatData");
 const getTitleFromClaude = require("../controllers/getTitle");
 const { generateTitleFromGemini } = require("../controllers/generateResponse");
+const getModel = require("../controllers/initializeModel");
 const { ObjectId } = require("mongoose").Types;
 
 
@@ -23,8 +24,8 @@ historyrouter.post("/history", async (req, res) => {
   let userhistory = await history.findOne({ userId });
   // CASE: No chatId provided — create new chat
   if (!chatId) {
-   const title=await generateTitleFromGemini(response);
-   console.log(title);
+    const ai=await getModel(userId)
+   const title=await generateTitleFromGemini(response,ai);
     const newChat = await chatData.create({
       userId:userId,
       title,
@@ -78,7 +79,6 @@ historyrouter.post("/history", async (req, res) => {
 historyrouter.get("/history", async (req, res) => {
   try {
     const { user, personality } = req.query;
-    console.log(user);
     if (!user || !personality) {
       return res.status(400).json({ error: "Missing user or personality" });
     }
@@ -131,7 +131,6 @@ historyrouter.get("/history/chats", async (req, res) => {
       return res.status(404).json({ error: "No chat found" });
     }
 
-    console.log(chat);
 
     return res.status(200).json(chat.messages); // assuming messages is an array
   } catch (error) {
@@ -160,7 +159,6 @@ historyrouter.delete("/history/delete", async (req, res) => {
     (chat) => !chat.equals(chatObjectId)
    );
    await historyUpdate.save();
-   console.log(historyUpdate.historyData[personality]);
     if (!deletedItem||!historyUpdate) {
       return res.status(404).json({ message: "Item not found" });
     }

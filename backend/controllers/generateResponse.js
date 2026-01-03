@@ -2,9 +2,8 @@
 const { GoogleGenAI } =require("@google/genai");
 const dotenv = require("dotenv");
 const getContext = require("./getHistory");
-dotenv.config({path:"../backend/.env"});
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY});
+
+
 
 
 
@@ -19,7 +18,10 @@ const personalityPrompts = {
 };
 
 // const inst="You are an expert assistant that explains concepts and responses in a clean, engaging, and structured format.For the following query or topic, format your response with:- ✅ Clear section **headings** using bold or Markdown style- 🧾 Use **bullet points** or numbered lists for clarity- ✨ Use relevant **emojis** to add visual cues/emotion- 📌 Use indentation or sub-bullets where needed for hierarchy- 🔍 Add short summaries at the end of sections if appropriate- ⚙️ Keep tone human-like but informative, with minimal fluff"
-async function genresponse(prompt,personality,socket,currentChatId) {
+async function genresponse(prompt,personality,socket,currentChatId,ai) {
+
+// key configuration
+
  const context =await getContext(currentChatId);
    const personalityPrompt=personalityPrompts[personality]||"";
    //google search enabling
@@ -106,7 +108,10 @@ function addCitations(chunk) {
     return citations;
 }
 
-async function generateTitleFromGemini(inputText) {
+
+
+
+async function generateTitleFromGemini(inputText,ai) {
   const prompt = `Give a short, catchy title (max 4 words) for: ${inputText.parts[0].text}`;
 
   const config={

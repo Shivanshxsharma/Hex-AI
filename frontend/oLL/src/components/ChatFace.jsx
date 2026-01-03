@@ -21,7 +21,7 @@ const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloadin
     <div
       id="ChatFace"
       ref={chatContainerRef}
-      className="flex flex-col h-[83%] rounded-2xl scroll-smooth overflow-y-auto w-full fixed right-0 top-10 transition-all duration-300 items-end pt-15 sm:px-8 md:pl-[6rem] md:pr-[2rem]"
+      className="flex flex-col h-[83%] rounded-2xl scroll-smooth overflow-y-auto overflow-x-clip w-full fixed right-0 top-10 transition-all duration-300 items-end pt-15 sm:px-8 md:pl-[6rem] md:pr-[2rem]"
       style={{ width: otherDivWidthChange }}
     >
       {conversation.map((msg, index) => (
@@ -53,7 +53,7 @@ const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloadin
           />
         </>
       ) : currentResponse ? (
-        <div className="w-full transition-all duration-300 ease-in-out h-fit flex justify-start mt-6">
+        <div className="w-full transition-all duration-300 ease-in-out h-fit flex justify-center mt-6">
           <ChatBubble role="model" response={currentResponse} />
         </div>
       ) : null}

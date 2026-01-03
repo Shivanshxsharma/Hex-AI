@@ -18,19 +18,35 @@ import opt from '../assets/menulogo.png'
 import SignupBoard from "../components/SignupBoard";
 import SignConfirmation from "../components/SignConfirmation";
 import TextType from "../components/animations/TextType";
+import Apikeypopup from "../components/apikeypopup";
 
-function Home() {
-      const [signoutPopup, setsignoutPopup] = useState(false);
+function Home({encryptedApiKey}) {
+const [signoutPopup, setsignoutPopup] = useState(false);
+const [apikeyfound, setapikeyfound] = useState(false)
   const { user, isLoaded } = useUser();
   const [delayPassed, setDelayPassed] = useState(false);
    const [changeWidth, setchangeWidth] = useState("5vw");
    const [otherDivWidthChange, setotherDivWidthChange] = useState("95vw");
    const [mobileMenuWidth, setmobileMenuWidth] = useState("0vw")
   // ✅ Wait 2s after component mounts (no matter what)
+
+
+
+
   useEffect(() => {
     const timer = setTimeout(() => setDelayPassed(true), 1000);
     return () => clearTimeout(timer);
   }, []);
+
+
+  useEffect(() => {
+     
+      if(user){
+        if(encryptedApiKey) setapikeyfound(true);
+        else setapikeyfound(false)
+      }else setapikeyfound(true)
+  }, [encryptedApiKey,user])
+  
 
   // ✅ Show loader until both user is loaded and delay is done
   if (!isLoaded || !delayPassed) {
@@ -39,7 +55,6 @@ function Home() {
           </div>)
     
   }
-
      function mobileMenuHandler() {
       if (mobileMenuWidth=="0vw") {
       setmobileMenuWidth("70vw");
@@ -116,9 +131,19 @@ const greetings = [
 
 />
 </div>
+<div
+  className="fixed inset-0 z-20 flex justify-center items-center transition-all duration-500"
+  style={{
+    opacity: !apikeyfound ? 1 : 0,
+    pointerEvents: !apikeyfound ? "auto" : "none", // Allow clicking only when visible
+    backgroundColor: "rgba(0,0,0,0.4)",
+  }}
+>
+   <Apikeypopup  apikeyfound={apikeyfound}/>
+</div>
 
-        <div style={{opacity: (signoutPopup)?"30%":"100%"} } className="h-screen w-screen z-9 transition-all duration-200">
-      <div className="w-screen h-screen" style={{opacity:(signoutPopup)?"50%":"100%"}}/>
+        <div style={{opacity: (signoutPopup||!apikeyfound)?"30%":"100%"} } className="h-screen w-screen z-9 transition-all duration-200">
+      <div className="w-screen h-screen" style={{opacity:(signoutPopup||!apikeyfound)?"50%":"100%"}}/>
           <div className="hidden md:block">
           <div className="h-screen   fixed left-0 top-0 transition-all duration-200 z-3" style={{width:changeWidth}}>
           <Sidebar  setsignoutPopup={setsignoutPopup} changeWidth={changeWidth} setotherDivWidthChange={setotherDivWidthChange} setchangeWidth={setchangeWidth}/>
