@@ -67,6 +67,13 @@ const [currentChatId, setcurrentChatId] = useState(chatId)
     const timer = setTimeout(() => {
       setVisible(true);
     }, 50); // trigger after render
+     
+    
+    if(!socketRef){
+      setLoading(true);
+    }
+
+
 
     return () => clearTimeout(timer);
   }, []);
@@ -82,7 +89,7 @@ useEffect(() => {
     return () => clearTimeout(timer);
   } else {
     // No socket available
-    setLoading(true);
+    setLoading(false);
   }
 }, [socketRef.current]);
 
