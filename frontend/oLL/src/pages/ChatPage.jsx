@@ -433,7 +433,7 @@ useEffect(() => {
 
 
 
-          {loading &&    (<div className="flex justify-center items-center h-screen w-screen z-100">
+          {socketRef&&loading &&    (<div className="flex justify-center items-center h-screen w-screen z-100">
                     <RingLoader />
                     </div>)}
 
