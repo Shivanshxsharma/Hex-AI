@@ -18,7 +18,7 @@ import opt from '../assets/menulogo.png'
 import SignupBoard from "../components/SignupBoard";
 import SignConfirmation from "../components/SignConfirmation";
 import TextType from "../components/animations/TextType";
-import Apikeypopup from "../components/apikeypopup";
+import Apikeypopup from "../components/Apikeypopup";
 
 function Home({encryptedApiKey}) {
 const [signoutPopup, setsignoutPopup] = useState(false);
