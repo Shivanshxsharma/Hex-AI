@@ -39,8 +39,7 @@ const config = {
       },
 };
 // generate stream content
-try {
-    const response = await ai.models.generateContentStream({
+  const response = await ai.models.generateContentStream({
     model: "gemini-2.5-flash",
       contents: [
         ...context,
@@ -50,10 +49,6 @@ try {
       }
     ],config,
   });
-} catch (error) {
-  console.error(error)
-}
-
     
 
 let cits = [];
@@ -61,7 +56,6 @@ const seenUris = new Set();
 
 for await (const chunk of response) {
     const text = chunk.text;
-    console.log(text);
     
     const sources = addCitations(chunk);
     
@@ -73,14 +67,6 @@ for await (const chunk of response) {
         return false;
     });
     
-try {
-  
-} catch (error) {
-  
-}
-
-
-
     cits.push(...newCitations);
     
     if (text) {
@@ -88,7 +74,7 @@ try {
     }
 }
 
-
+// Add a small delay to ensure all chunks are processed
     socket.emit("model_chunk_end", cits);
 ;
 }
@@ -120,9 +106,6 @@ function addCitations(chunk) {
     return citations;
 }
 
-
-
-
 async function generateTitleFromGemini(inputText) {
   const prompt = `Give a short, catchy title (max 4 words) for: ${inputText.parts[0].text}`;
 
@@ -131,12 +114,6 @@ async function generateTitleFromGemini(inputText) {
     parts:[{text:"You are a title generater for for chat with ai from the users prompt these titles are used in history section , so give title that are short , catchy and relevent to the user prompt "}],
   }
   }
-
-
-
-
-
-
   const response = await ai.models.generateContent({
 
     model: "gemini-2.5-flash-lite",

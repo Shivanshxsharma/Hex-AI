@@ -11,7 +11,6 @@ cors: {
   });
 
   io.on("connection",  (socket) => {
-    console.log("Client connected:", socket.id);
 
     socket.on("prompt_By_User", async (prompt,personality,currentChatId) => {
       try {
@@ -19,12 +18,13 @@ cors: {
        await genresponse(prompt,personality,socket,currentChatId)
       } catch (error) {
         console.error("Gemini Error:", error);
-        socket.emit("response_error", "Failed to get Gemini response.");
+        if (error.response?.status === 429 || error.status === 429) {
+        socket.emit("response_error", "API keys exhausted. Rate limit exceeded.");
+        } 
       }
     });
 
     socket.on("disconnect", () => {
-      console.log("Client disconnected:", socket.id);
     });
   });
 }

@@ -263,7 +263,6 @@ async function historyHandler(finalResponse, token,chatId) {
     });
     if(res.ok){
       const data=await res.json();
-      console.log( data);
 
       if(data.chatId){
         navigate(`/${Headline.toLowerCase()}/chats/${data.chatId}`);
@@ -308,7 +307,6 @@ useEffect(() => {
     if(!startGenerating||!socketRef.current) return;
     
     console.log("getting response");
-        console.log(currentResponse);
     const handleChunk = (chunk) => {
         setCurrentResponse(prev => prev + chunk);
         setisloading(false);
@@ -316,7 +314,6 @@ useEffect(() => {
 
     const handleChunkEnd = async(cits) => {
       const token= await getToken()  
-      console.log(cits);
         setCurrentResponse(latestResponse => {
             if (latestResponse.trim()) { 
                 setConversation(  prev => {
@@ -394,7 +391,6 @@ useEffect(() => {
       default:
         setSuggestionArray([]);
     }
-    console.log(Headline);
 
   }, [Headline]);
 
