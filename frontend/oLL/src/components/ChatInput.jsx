@@ -65,7 +65,7 @@ function ChatInput({startGenerating,setstartGenerating,setisloading,SuggestionAr
     <div className="w-full h-[0vh] md:h-[0vh] bg-[#202020] transition-all duration-300   flex items-end justify-between px-2 pb-2">
       <div className=" w-[92%] h-full items-center transition-all duration-300 ">
       </div>
-    <button style={{display:!startGenerating?"block":"none"}} onClick={()=>{submitHandler(textareaRef.current.value) ,textareaRef.current.value="" }} className=" hover:opacity-50 hover:cursor-pointer transition-all duration-100 bg-white h-[35px] mb-1.5 md:mb-2.5 flex p-2 justify-center w-[35px] rounded-full"><img src={submit} /></button>
+    <button style={{display:!startGenerating?"block":"none"}} onClick={()=>{submitHandler(textareaRef.current.value), setstartGenerating(true) ,textareaRef.current.value="" }} className=" hover:opacity-50 hover:cursor-pointer transition-all duration-100 bg-white h-[35px] mb-1.5 md:mb-2.5 flex p-2 justify-center w-[35px] rounded-full"><img src={submit} /></button>
     <button style={{display:startGenerating?"block":"none"}} onClick={()=>{setstartGenerating(false),setisloading(false) }} className=" hover:opacity-50 hover:cursor-pointer transition-all duration-100 bg-white h-[35px] flex p-2 justify-center mb-1.5 md:mb-2.5 w-[35px] rounded-full"><img src={stop} /></button>
     </div>
   </div>
