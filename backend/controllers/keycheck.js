@@ -1,12 +1,12 @@
 const https = require('https');
 
 function checkAPIKey() {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models?key=AIzaSyCaOMQpV7pP341iQ4vZfiD26bPRZx2Vm3g`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models?key=`;
   
   https.get(url, (res) => {
     let data = '';
     
-    res.on('data', (chunk) => {
+    res.on('data', (chunk) => 
       data += chunk;
     });
     
