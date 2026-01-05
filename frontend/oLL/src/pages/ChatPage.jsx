@@ -260,7 +260,7 @@ async function historyExtractor(token,id) {
 
 // history handler;
 async function historyHandler(finalResponse, token,chatId) {
-  console.log(finalResponse)
+  console.log("final response  :-----------"+finalResponse)
   
   try {
 
@@ -288,7 +288,7 @@ async function historyHandler(finalResponse, token,chatId) {
 
     if (!res.ok) {
       const errorText = await res.text(); // ✅ use text to catch HTML errors
-      console.error("❌ Failed to store history:", errorText);
+      console.error("❌ Failed to store history:", errorText,token,chatId);
     } else {
       console.log("✅ History stored successfully");
     }
