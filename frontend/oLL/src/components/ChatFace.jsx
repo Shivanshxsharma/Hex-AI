@@ -5,6 +5,7 @@ import { animate } from 'framer-motion'
 import ThinkingLoader from './ThinkingLoader';
 
 const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloading }) => {
+  const prevLengthRef = useRef(0);
   const chatContainerRef = useRef(null);
   const scrollTargetRef = useRef(null);
 const [DisplayText, setDisplayText] = useState()
