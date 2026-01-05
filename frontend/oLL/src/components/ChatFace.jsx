@@ -29,7 +29,7 @@ const [DisplayText, setDisplayText] = useState()
       duration: 0.4, 
       ease: "linear",
       onUpdate(latest) {
-        setDisplayText(content.slice(0, Math.floor(latest)));
+        setDisplayText(currentResponse.slice(0, Math.floor(latest)));
       }
     });
 
