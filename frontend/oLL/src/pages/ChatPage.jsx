@@ -260,6 +260,7 @@ async function historyExtractor(token,id) {
 
 // history handler;
 async function historyHandler(finalResponse, token,chatId) {
+  console.log(finalResponse)
   
   try {
 
