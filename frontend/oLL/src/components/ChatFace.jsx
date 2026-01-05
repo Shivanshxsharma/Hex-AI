@@ -19,13 +19,13 @@ const [DisplayText, setDisplayText] = useState()
 
 
   useEffect(() => {
-    if (!isloading) {
-      setDisplayText(content);
-      return;
-    }
+    // if (!isloading) {
+    //   setDisplayText(currentResponse);
+    //   return;
+    // }
 
     // Animate the cursor from the last known length to the new length
-    const controls = animate(prevLengthRef.current, content.length, {
+    const controls = animate(prevLengthRef.current, currentResponse.length, {
       duration: 0.4, 
       ease: "linear",
       onUpdate(latest) {
@@ -33,7 +33,7 @@ const [DisplayText, setDisplayText] = useState()
       }
     });
 
-    prevLengthRef.current = content.length;
+    prevLengthRef.current = currentResponse.length;
     return () => controls.stop();
   }, [currentResponse, isloading]);
 
