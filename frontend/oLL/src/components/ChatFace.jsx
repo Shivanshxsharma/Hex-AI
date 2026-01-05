@@ -66,6 +66,13 @@ const [DisplayText, setDisplayText] = useState()
         </div>
       ))}
 
+
+
+
+
+
+
+
       {isloading ? (
         <>
           <div className="w-full pl-7 md:pl-2  justify-start transition-all duration-300 ease-in-out h-fit gap-2.5 flex md:justify-start mt-6">

@@ -349,7 +349,7 @@ useEffect(() => {
                 
     };
 
-    // 🔥 CRITICAL: Remove existing listeners first
+    //  CRITICAL: Remove existing listeners first
     socketRef.current.off("model_chunk", handleChunk);
     socketRef.current.off("model_chunk_end", handleChunkEnd);
     
@@ -481,7 +481,7 @@ useEffect(() => {
 
         <div className="fixed bottom-4 transition-all overflow-visible  ease-in-out duration-300 right-0 w-full px-4 sm:px-12 pb-4 z-3" style={{width:otherDivWidthChange}}>
            
-          <ChatInput startGenerating={startGenerating} setisloading={setisloading} setstartGenerating={setstartGenerating} fillSugg={fillSugg} setfillSugg={setfillSugg} suggestion={suggestion}  submitHandler={submitHandler} SuggestionArray={SuggestionArray} Headline={Headline}/>
+          <ChatInput getToken={getToken} chatId={chatIdRef.current} historyHandler={historyHandler} currentResponse={currentResponse} startGenerating={startGenerating} setisloading={setisloading} setstartGenerating={setstartGenerating} fillSugg={fillSugg} setfillSugg={setfillSugg} suggestion={suggestion}  submitHandler={submitHandler} SuggestionArray={SuggestionArray} Headline={Headline}/>
         </div>
       </div>
     </>
