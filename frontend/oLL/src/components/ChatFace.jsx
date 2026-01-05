@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ChatBubble from './ChatBubble';
 import Loader from './Loader';
+import { animate } from 'framer-motion'
 import ThinkingLoader from './ThinkingLoader';
 
 const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloading }) => {
