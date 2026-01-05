@@ -6,7 +6,7 @@ import ThinkingLoader from './ThinkingLoader';
 const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloading }) => {
   const chatContainerRef = useRef(null);
   const scrollTargetRef = useRef(null);
-
+const [DisplayText, setDisplayText] = useState()
   // Scroll to the transparent div only when loading starts
   useEffect(() => {
     if (isloading && scrollTargetRef.current) {
@@ -16,6 +16,30 @@ const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloadin
       });
     }
   }, [isloading]);
+
+
+  useEffect(() => {
+    if (!isloading) {
+      setDisplayText(content);
+      return;
+    }
+
+    // Animate the cursor from the last known length to the new length
+    const controls = animate(prevLengthRef.current, content.length, {
+      duration: 0.4, 
+      ease: "linear",
+      onUpdate(latest) {
+        setDisplayText(content.slice(0, Math.floor(latest)));
+      }
+    });
+
+    prevLengthRef.current = content.length;
+    return () => controls.stop();
+  }, [currentResponse, isloading]);
+
+
+
+
 
   return (
     <div
@@ -54,7 +78,7 @@ const ChatFace = ({ otherDivWidthChange, conversation, currentResponse, isloadin
         </>
       ) : currentResponse ? (
         <div className="w-full transition-all duration-300 ease-in-out h-fit flex justify-center mt-6">
-          <ChatBubble role="model" response={currentResponse} />
+          <ChatBubble role="model" response={DisplayText} />
         </div>
       ) : null}
     </div>
