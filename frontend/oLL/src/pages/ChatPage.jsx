@@ -440,17 +440,23 @@ useEffect(() => {
 
 
         <div className="hidden md:block">
-          <div className="h-screen   fixed left-0 top-0 transition-all duration-200 z-4" style={{width:changeWidth}}>
+          <div className="h-screen fixed left-0 top-0 transition-all duration-300 ease-in-out z-4" style={{width:changeWidth}}>
           <Sidebar currentChatId={currentChatId} personality={Headline} historyExtractor={historyExtractor} setsignoutPopup={setsignoutPopup} changeWidth={changeWidth} setotherDivWidthChange={setotherDivWidthChange} setchangeWidth={setchangeWidth}/>
         </div>
         </div>
-        <div className="block sm:hidden ">
-          <div className={`fixed h-screen top-0 transition-transform duration-300 z-10 transform ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} w-[70vw] bg-amber-500`}>
-
-           <SidebarSmall currentChatId={currentChatId} personality={Headline} historyExtractor={historyExtractor} setsignoutPopup={setsignoutPopup} mobileMenuHandler={mobileMenuHandler}/>
-           
-        </div>
-            <button onClick={mobileMenuHandler}  className=' fixed left-0 w-[30px] flex justify-center items-center p-1 rounded-xl hover:bg-[#2E2E2E] aspect-square mt-3 h-[30px] z-7'><img src={opt} alt="" srcset="" /></button>
+        <div className="block md:hidden">
+          <div className={`fixed h-screen top-0 transition-transform duration-300 z-20 transform ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} w-[70vw]`}>
+            <SidebarSmall currentChatId={currentChatId} personality={Headline} historyExtractor={historyExtractor} setsignoutPopup={setsignoutPopup} mobileMenuHandler={mobileMenuHandler}/>
+          </div>
+          <div className="fixed z-10 top-3 left-3">
+            <button 
+              onClick={mobileMenuHandler} 
+              className="w-8 h-8 flex justify-center items-center p-2 border border-[#2e2e2e]/20 hover:border-[#2e2e2e]/50 bg-[#090909]/80 backdrop-blur-md rounded-lg transition-all duration-200"
+              title="Open menu"
+            >
+              <img src={opt} alt="Menu" className="w-3.5 h-3.5 opacity-60 hover:opacity-100" />
+            </button>
+          </div>
         </div>
         <div className="fixed  right-0 top-0  transition-all duration-300 ease-in-out w-full z-0" style={{width:otherDivWidthChange}}>
           <Header Headline={Headline}/>
@@ -480,7 +486,10 @@ useEffect(() => {
 
 
 
-        <div className="fixed bottom-4 transition-all overflow-visible  ease-in-out duration-300 right-0 w-full px-4 sm:px-12 pb-4 z-3" style={{width:otherDivWidthChange}}>
+        <div 
+          className="fixed bottom-4 overflow-visible right-0 w-full px-4 sm:px-12 pb-4 z-3" 
+          style={{ width: otherDivWidthChange, transition: 'width 0.3s ease-in-out' }}
+        >
            
           <ChatInput getToken={getToken} chatId={chatIdRef.current} historyHandler={historyHandler} currentResponse={currentResponse} startGenerating={startGenerating} setisloading={setisloading} setstartGenerating={setstartGenerating} fillSugg={fillSugg} setfillSugg={setfillSugg} suggestion={suggestion}  submitHandler={submitHandler} SuggestionArray={SuggestionArray} Headline={Headline}/>
         </div>

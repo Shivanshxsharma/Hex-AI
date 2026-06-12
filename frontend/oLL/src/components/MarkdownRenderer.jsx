@@ -212,16 +212,14 @@ const MarkdownRenderer = ({ content, sources }) => {
       }}
     >
       <div
-        id="ChatFace"
+        id="sourcesScrollContainer"
         style={{
           overflowY: "auto",
           overflowX: "hidden",
           maxHeight: "320px",
           paddingRight: "4px",
-          scrollbarWidth: "thin",
-          scrollbarColor: "#4B5563 #1F2937",
         }}
-        className="[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-800 [&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-thumb]:rounded-sm [&::-webkit-scrollbar-thumb:hover]:bg-gray-500"
+        className="sources-scroll"
       >
         <ul
           style={{
