@@ -61,13 +61,21 @@ router.put("/setkeys", async (req, res) => {
 
 
 router.get("/getkeys", async (req, res) => {
-
-  const userId = req.headers['userid'] || req.headers['userId'];
-  // console.log('getting keys for ',userId)
-  if(!userId) return res.status(500).json({error:"cant fetch keys right now , please try again after some time"})
-    const user= await User.findOne({clerkId:userId})
-  if(!user) return res.status(500).json({error:"cant fetch keys right now , please try again after some time"})
+  try {
+    const userId = req.headers['userid'] || req.headers['userId'];
+    if(!userId) return res.status(500).json({error:"cant fetch keys right now , please try again after some time"})
+    const user = await User.findOne({clerkId:userId})
+    if(!user) return res.status(500).json({error:"cant fetch keys right now , please try again after some time"})
+    
+    if (!user.apikey) {
+      return res.json({"status": false, "key": ""});
+    }
+    
     return res.json({"status":true,"key":`...........................${user.apikey.slice(-2)}`})
+  } catch (error) {
+    console.error("Error fetching keys:", error);
+    return res.status(500).json({error: "Server error while fetching keys"});
+  }
 });
 
 

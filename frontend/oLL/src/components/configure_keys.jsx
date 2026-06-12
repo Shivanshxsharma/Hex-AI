@@ -3,7 +3,7 @@ import { Eye, EyeOff, Edit2, Save, X } from 'lucide-react';
 import { useUser } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router';
 
-const ConfigureKeys = ({encryptedApiKey}) => {
+const ConfigureKeys = ({encryptedApiKey, setencryptedApiKey}) => {
   const [apiKey, setApiKey] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState('');
@@ -40,7 +40,12 @@ const ConfigureKeys = ({encryptedApiKey}) => {
 
           const data = await res.json();
           console.log(data);
-          if(data.status) setApiKey(data.key)
+          if(data.status) {
+            setApiKey(data.key)
+            if (setencryptedApiKey) {
+              setencryptedApiKey(data.key)
+            }
+          }
 
         } catch (error) {
           console.error("Error setting keys:", error);
